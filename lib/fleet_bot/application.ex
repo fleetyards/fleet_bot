@@ -4,7 +4,9 @@ defmodule FleetBot.Application do
 
   @impl Application
   def start(_type, _args) do
-    children = []
+    children = [
+      FleetBot.Repo
+    ]
 
     opts = [strategy: :one_for_one, name: FleetBot.Supervisor]
     Supervisor.start_link(children, opts)

@@ -10,7 +10,9 @@ defmodule FleetBot.MixProject do
       deps: deps(),
       aliases: aliases(),
       releases: [
-        fleet_bot: []
+        fleet_bot: [
+          config_providers: [{FleetBot.Config.ReleaseRuntimeProvider, []}]
+        ]
       ]
     ]
   end
