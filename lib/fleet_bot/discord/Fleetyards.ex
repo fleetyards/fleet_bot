@@ -34,25 +34,25 @@ defmodule FleetBot.Discord.Fleetyards do
   @impl Command
   def global_commands do
     [
-      create_command("fleetyards", "Fleetyards account management",
-        member_permission: :SEND_MESSAGES,
-        dm_permission: true,
-        options: [
-          create_option("link", "Link Fleetyards account",
-            type: :sub_command,
-            channel_types: [:guild_text, :dm, :guild_directory],
-            options: [
-              create_option("token", "Fleetyards access token", type: :string),
-              create_option("username", "Fleetyards username or email address", type: :string),
-              create_option("password", "Fleetyards password", type: :string)
-            ]
-          ),
-          create_option("unlink", "Unlink Fleetyards accounts",
-            type: :sub_command,
-            channel_types: [:guild_text, :dm, :guild_directory]
-          )
-        ]
-      )
+      # create_command("fleetyards", "Fleetyards account management",
+      #   member_permission: :SEND_MESSAGES,
+      #   dm_permission: true,
+      #   options: [
+      #     create_option("link", "Link Fleetyards account",
+      #       type: :sub_command,
+      #       channel_types: [:guild_text, :dm, :guild_directory],
+      #       options: [
+      #         create_option("token", "Fleetyards access token", type: :string),
+      #         create_option("username", "Fleetyards username or email address", type: :string),
+      #         create_option("password", "Fleetyards password", type: :string)
+      #       ]
+      #     ),
+      #     create_option("unlink", "Unlink Fleetyards accounts",
+      #       type: :sub_command,
+      #       channel_types: [:guild_text, :dm, :guild_directory]
+      #     )
+      #   ]
+      # )
     ]
   end
 

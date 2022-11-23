@@ -63,6 +63,7 @@ defmodule FleetBot.Discord do
 
   ## Consumer impl
   use Nostrum.Consumer
+  use FleetBot.Gettext
 
   def start_link, do: Consumer.start_link(__MODULE__)
 
@@ -80,8 +81,14 @@ defmodule FleetBot.Discord do
          } = interaction, _ws_state}
       )
       when is_binary(name) do
-    module = RegisterManager.get_module(name)
-    apply(module, :command, [name, interaction])
+    RegisterManager.get_module(name)
+    |> case do
+      module when is_atom(module) ->
+        apply(module, :command, [name, interaction])
+
+      nil ->
+        LGettext.error("No module found for command `%{command}`", command: name)
+    end
   end
 
   @impl true
