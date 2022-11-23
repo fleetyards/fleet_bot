@@ -6,7 +6,7 @@ defmodule FleetBot.Application do
   def start(_type, _args) do
     children = [
       FleetBot.Repo,
-      FleetBot.Discord.Commands.RegisterManager,
+      FleetBot.Discord.Commands,
       FleetBot.Discord
     ]
 

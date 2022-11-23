@@ -12,6 +12,7 @@ defmodule FleetBot.Discord do
 
   See: https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-naming
   """
+  alias FleetBot.Discord.Commands.RegisterManager
   alias Nostrum.Consumer
   def chat_command_allowed_regex, do: ~R/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u
 
@@ -44,6 +45,23 @@ defmodule FleetBot.Discord do
       else: changeset
   end
 
+  @spec get_subcommand_name(
+          %Nostrum.Struct.Interaction{}
+          | %Nostrum.Struct.ApplicationCommandInteractionData{}
+          | [%Nostrum.Struct.ApplicationCommandInteractionDataOption{}]
+          | %Nostrum.Struct.ApplicationCommandInteractionDataOption{}
+        ) :: String.t()
+  def get_subcommand_name(%Nostrum.Struct.Interaction{data: data}), do: get_subcommand_name(data)
+
+  def get_subcommand_name(%Nostrum.Struct.ApplicationCommandInteractionData{options: options}),
+    do: get_subcommand_name(options)
+
+  def get_subcommand_name([option | _]), do: get_subcommand_name(option)
+
+  def get_subcommand_name(%Nostrum.Struct.ApplicationCommandInteractionDataOption{name: name}),
+    do: name
+
+  ## Consumer impl
   use Nostrum.Consumer
 
   def start_link, do: Consumer.start_link(__MODULE__)
@@ -52,6 +70,18 @@ defmodule FleetBot.Discord do
   def handle_event({:READY, %{}, _ws_state}) do
     FleetBot.Discord.Commands.RegisterManager.set_ready()
     :noop
+  end
+
+  @impl Nostrum.Consumer
+  def handle_event(
+        {:INTERACTION_CREATE,
+         %Nostrum.Struct.Interaction{
+           data: %Nostrum.Struct.ApplicationCommandInteractionData{name: name}
+         } = interaction, _ws_state}
+      )
+      when is_binary(name) do
+    module = RegisterManager.get_module(name)
+    apply(module, :command, [name, interaction])
   end
 
   @impl true

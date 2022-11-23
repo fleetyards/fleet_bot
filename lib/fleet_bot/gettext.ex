@@ -13,6 +13,12 @@ defmodule FleetBot.Gettext do
     end
   end
 
+  defmacro error(msg, opts \\ []) do
+    quote do
+      Logger.error(unquote(__MODULE__).dgettext("logger", unquote(msg), unquote(opts)))
+    end
+  end
+
   defmacro __using__(_opts) do
     quote do
       alias unquote(__MODULE__), as: LGettext

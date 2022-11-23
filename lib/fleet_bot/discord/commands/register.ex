@@ -16,8 +16,7 @@ defmodule FleetBot.Discord.Commands.Register do
       alias unquote(__MODULE__)
       require unquote(__MODULE__)
 
-      import unquote(__MODULE__),
-        only: [create_command: 2, create_command: 3, localization_dict: 1]
+      import unquote(__MODULE__)
 
       require FleetBot.Gettext
     end
