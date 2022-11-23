@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.29.1">
     <meta name="project" content="fleet_bot v0.1.0">
 
-    <title>FleetBot.Discord.Commands.RegisterManager — fleet_bot v0.1.0</title>
+    <title>FleetBot.Discord.Commands.Register — fleet_bot v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
 
 
@@ -21,7 +21,7 @@
 
 
   </head>
-  <body data-type="modules" class="page-module">
+  <body data-type="modules" class="page-behaviour">
     <script>
 
       try {
@@ -96,7 +96,7 @@ fleet_bot
 </button>
 
 
-  <span translate="no">FleetBot.Discord.Commands.RegisterManager</span> 
+  <span translate="no">FleetBot.Discord.Commands.Register</span> <small>behaviour</small>
   <small class="app-vsn" translate="no">(fleet_bot v0.1.0)</small>
 
 </h1>
@@ -111,6 +111,28 @@ fleet_bot
       </a>
       Summary
     </h1>
+<div class="summary-callbacks summary">
+  <h2>
+    <a href="#callbacks">Callbacks</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:delete_global_commands/0" translate="no">delete_global_commands()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:global_commands/0" translate="no">global_commands()</a>
+
+      </div>
+
+    </div>
+
+</div>
 <div class="summary-functions summary">
   <h2>
     <a href="#functions">Functions</a>
@@ -118,17 +140,7 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#child_spec/1" translate="no">child_spec(init_arg)</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#register_global_command/1" translate="no">register_global_command(command)</a>
+        <a href="#create_command/3" translate="no">create_command(name, description, opts \\ [])</a>
 
       </div>
 
@@ -136,7 +148,7 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#register_global_command/3" translate="no">register_global_command(command, old_command, hash)</a>
+        <a href="#create_option/3" translate="no">create_option(name, description, opts \\ [])</a>
 
       </div>
 
@@ -144,23 +156,7 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#register_global_commands/1" translate="no">register_global_commands(state)</a>
-
-      </div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#set_ready/0" translate="no">set_ready()</a>
-
-      </div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#start_link/1" translate="no">start_link(opts \\ nil)</a>
+        <a href="#localization_dict/1" translate="no">localization_dict(key)</a>
 
       </div>
 
@@ -171,6 +167,69 @@ fleet_bot
   </section>
 
 
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Callbacks
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:delete_global_commands/0">
+
+  <div class="detail-header">
+    <a href="#c:delete_global_commands/0" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">delete_global_commands()</h1>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> delete_global_commands() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:global_commands/0">
+
+  <div class="detail-header">
+    <a href="#c:global_commands/0" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">global_commands()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> global_commands() :: [
+  <a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.ApplicationCommand.html#t:application_command_map/0">Nostrum.Struct.ApplicationCommand.application_command_map</a>()
+]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
   <section id="functions" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
@@ -180,57 +239,19 @@ fleet_bot
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="child_spec/1">
+<section class="detail" id="create_command/3">
+
+    <span id="create_command/2"></span>
 
   <div class="detail-header">
-    <a href="#child_spec/1" class="detail-link" title="Link to this function">
+    <a href="#create_command/3" class="detail-link" title="Link to this macro">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this macro</span>
     </a>
-    <h1 class="signature" translate="no">child_spec(init_arg)</h1>
+    <h1 class="signature" translate="no">create_command(name, description, opts \\ [])</h1>
 
 
-  </div>
-
-  <section class="docstring">
-
-<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
-  </section>
-</section>
-<section class="detail" id="register_global_command/1">
-
-  <div class="detail-header">
-    <a href="#register_global_command/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">register_global_command(command)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> register_global_command(
-  <a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.ApplicationCommand.html#t:application_command_map/0">Nostrum.Struct.ApplicationCommand.application_command_map</a>()
-) :: nil | :ok</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="register_global_command/3">
-
-  <div class="detail-header">
-    <a href="#register_global_command/3" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">register_global_command(command, old_command, hash)</h1>
-
+      <span class="note">(macro)</span>
 
   </div>
 
@@ -239,15 +260,19 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="register_global_commands/1">
+<section class="detail" id="create_option/3">
+
+    <span id="create_option/2"></span>
 
   <div class="detail-header">
-    <a href="#register_global_commands/1" class="detail-link" title="Link to this function">
+    <a href="#create_option/3" class="detail-link" title="Link to this macro">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this macro</span>
     </a>
-    <h1 class="signature" translate="no">register_global_commands(state)</h1>
+    <h1 class="signature" translate="no">create_option(name, description, opts \\ [])</h1>
 
+
+      <span class="note">(macro)</span>
 
   </div>
 
@@ -256,34 +281,17 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="set_ready/0">
+<section class="detail" id="localization_dict/1">
 
   <div class="detail-header">
-    <a href="#set_ready/0" class="detail-link" title="Link to this function">
+    <a href="#localization_dict/1" class="detail-link" title="Link to this macro">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this macro</span>
     </a>
-    <h1 class="signature" translate="no">set_ready()</h1>
+    <h1 class="signature" translate="no">localization_dict(key)</h1>
 
 
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="start_link/1">
-
-    <span id="start_link/0"></span>
-
-  <div class="detail-header">
-    <a href="#start_link/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">start_link(opts \\ nil)</h1>
-
+      <span class="note">(macro)</span>
 
   </div>
 

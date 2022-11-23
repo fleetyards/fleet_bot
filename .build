@@ -1,6 +1,9 @@
 404.html
+FleetBot.Discord.Commands.Register.html
 FleetBot.Discord.Commands.RegisterManager.html
+FleetBot.Discord.Commands.html
 FleetBot.Discord.html
+FleetBot.Gettext.html
 FleetBot.Repo.html
 FleetBot.html
 api-reference.html
@@ -29,7 +32,7 @@ dist/merriweather-latin-ext-300-normal-K6L27CZ5.woff2
 dist/merriweather-vietnamese-300-italic-EHHNZPUO.woff2
 dist/merriweather-vietnamese-300-normal-U376L4Z4.woff2
 dist/remixicon-NKANDIL5.woff2
-dist/search_items-FC087168.js
-dist/sidebar_items-31D61710.js
+dist/search_items-45CDD1D7.js
+dist/sidebar_items-BB58B3B6.js
 index.html
 search.html
