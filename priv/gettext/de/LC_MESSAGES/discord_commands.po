@@ -1,0 +1,67 @@
+## "msgid"s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove "msgid"s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use "mix gettext.extract --merge" or "mix gettext.merge"
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: de\n"
+"Plural-Forms: nplurals=2\n"
+
+#: lib/fleet_bot/discord/Fleetyards.ex:63
+#, elixir-autogen, elixir-format
+msgid "Account not linked, cannot unlink."
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:153
+#, elixir-autogen, elixir-format
+msgid "Ship `%{name}` does not provide any loaners"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:171
+#, elixir-autogen, elixir-format
+msgid "Ship `%{name}` provides the following loaners:"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:147
+#, elixir-autogen, elixir-format
+msgid "Ship `%{slug}` not found"
+msgstr ""
+
+#: lib/fleet_bot/discord/Fleetyards.ex:25
+#, elixir-autogen, elixir-format
+msgid "todo"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:123
+#, elixir-autogen, elixir-format
+msgid "Conceptship that gives loaners"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:128
+#, elixir-autogen, elixir-format
+msgid "Ship that is given by concept ship"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:119
+#, elixir-autogen, elixir-format
+msgid "Star Citizen Loaner informations"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:128
+#, elixir-autogen, elixir-format
+msgid "gets"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:123
+#, elixir-autogen, elixir-format
+msgid "gives"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:119
+#, elixir-autogen, elixir-format
+msgid "loaner"
+msgstr ""

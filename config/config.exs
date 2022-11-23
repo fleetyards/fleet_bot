@@ -6,7 +6,7 @@ config :fleet_bot,
 
 config :fleet_bot, FleetBot.Repo, pool_size: 10
 
-config :fleet_bot, FleetBot.Gettext, locales: ~w(de), default_locale: :de
+config :fleet_bot, FleetBot.Gettext, locales: ~w(de en-US), default_locale: :de
 
 config :fleet_bot, FleetBot.Discord,
   discord_allowed_langs:

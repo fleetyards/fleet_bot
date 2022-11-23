@@ -22,7 +22,8 @@ defmodule FleetBot.Gettext do
   defmacro __using__(_opts) do
     quote do
       alias unquote(__MODULE__), as: LGettext
-      require unquote(__MODULE__)
+      # unquote(__MODULE__)
+      require LGettext
       require Logger
     end
   end

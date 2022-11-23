@@ -7,7 +7,7 @@ defmodule FleetBot.Discord.Fleetyards do
 
   @impl Command
   def command("fleetyards", interaction) do
-    Api.create_interaction_response(
+    Api.create_interaction_response!(
       interaction,
       create_interaction_response(
         :deferred_channel_message_with_source,
@@ -20,7 +20,7 @@ defmodule FleetBot.Discord.Fleetyards do
   end
 
   def fleetyards_command("link", interaction) do
-    Api.edit_interaction_response(
+    Api.edit_interaction_response!(
       interaction,
       create_interaction_response_data(content: "todo", flags: :ephemeral)
     )
@@ -58,8 +58,10 @@ defmodule FleetBot.Discord.Fleetyards do
 
   # Internal helpers
   defp int_fleetyards_unlink(nil, interaction) do
-    content = LGettext.dgettext("discord_fleetyards", "Account not linked, cannot unlink.")
-    Api.edit_interaction_response(interaction, create_interaction_response_data(content: content))
+    Api.edit_interaction_response!(
+      interaction,
+      create_interaction_response_data(content: "Account not linked, cannot unlink.")
+    )
   end
 
   defp int_fleetyards_unlink(account, interaction) do

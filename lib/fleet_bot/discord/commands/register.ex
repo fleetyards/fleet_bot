@@ -22,15 +22,6 @@ defmodule FleetBot.Discord.Commands.Register do
     end
   end
 
-  # def localization_dict(key) do
-  #  locales = Gettext.known_locales(FGettext)
-  #  |> Stream.map(fn lang ->
-  #    Gettext.with_locale(lang, fn ->
-  #      {lang, FGettext.dgettext("discord::commands", key)}
-  #    end)
-  #  end)
-  #  |> Enum.into(%{})
-  # end
   defmacro localization_dict(key) do
     langs = Application.fetch_env!(:fleet_bot, FleetBot.Discord)[:discord_allowed_langs]
 
@@ -41,7 +32,7 @@ defmodule FleetBot.Discord.Commands.Register do
       end)
       |> Stream.map(fn lang ->
         Gettext.with_locale(lang, fn ->
-          {lang, FleetBot.Gettext.dgettext("discord::commands", unquote(key))}
+          {lang, FleetBot.Gettext.dgettext("discord_commands", unquote(key))}
         end)
       end)
       |> Enum.into(%{})
@@ -148,10 +139,10 @@ defmodule FleetBot.Discord.Commands.Register do
   defp command_input_type(:message), do: 3
   defp command_input_type(v) when is_integer(v), do: v
 
-  defp default_member_permission_conv(v) when is_binary(v), do: v
+  defp default_member_permission_conv(v) when is_binary(v) or is_nil(v), do: v
   defp default_member_permission_conv(v) when is_integer(v), do: Integer.to_string(v)
-  defp default_member_permission_conv(:VIEW_CHANNEL), do: 1 <<< 10
-  defp default_member_permission_conv(:SEND_MESSAGES), do: 1 <<< 11
+  defp default_member_permission_conv(:view_channel), do: 1 <<< 10
+  defp default_member_permission_conv(:send_message), do: 1 <<< 11
 
   defp command_option_type(:sub_command), do: 1
   defp command_option_type(:sub_command_group), do: 2

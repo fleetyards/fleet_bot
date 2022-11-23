@@ -17,6 +17,7 @@ defmodule FleetBot.Discord.Command do
         only: [
           create_interaction_response: 1,
           create_interaction_response: 2,
+          create_interaction_response_data: 0,
           create_interaction_response_data: 1
         ]
 
@@ -38,9 +39,21 @@ defmodule FleetBot.Discord.Command do
     end
   end
 
-  def create_interaction_response_data(opts) do
+  defmacro create_interaction_response_data(opts \\ []) do
     tts = Keyword.get(opts, :tts)
-    content = Keyword.get(opts, :content)
+
+    content =
+      Keyword.get(opts, :content)
+      |> case do
+        v when is_binary(v) ->
+          quote do
+            FleetBot.Gettext.dgettext("discord_commands", unquote(v), unquote(opts))
+          end
+
+        nil ->
+          nil
+      end
+
     embeds = Keyword.get(opts, :embeds)
     allowed_mentions = Keyword.get(opts, :allowed_mentions)
 
@@ -51,28 +64,27 @@ defmodule FleetBot.Discord.Command do
     components = Keyword.get(opts, :components)
     attachements = Keyword.get(opts, :attachements)
 
-    # quote do
-    #  %{
-    #    tts: unquote(tts),
-    #    content: unquote(
-    #      content
-    #    ),
-    #    embeds: unquote(embeds),
-    #    allowed_mentions: unquote(allowed_mentions),
-    #    flags: unquote(flags),
-    #    components: unquote(components),
-    #    attachements: unquote(attachements)
-    #  }
-    # end
-    %{
-      tts: tts,
-      content: content,
-      embeds: embeds,
-      allowed_mentions: allowed_mentions,
-      flags: flags,
-      components: components,
-      attachements: attachements
-    }
+    quote do
+      %{
+        tts: unquote(tts),
+        content: unquote(content),
+        embeds: unquote(embeds),
+        allowed_mentions: unquote(allowed_mentions),
+        flags: unquote(flags),
+        components: unquote(components),
+        attachements: unquote(attachements)
+      }
+    end
+
+    # %{
+    #  tts: tts,
+    #  content: content,
+    #  embeds: embeds,
+    #  allowed_mentions: allowed_mentions,
+    #  flags: flags,
+    #  components: components,
+    #  attachements: attachements
+    # }
   end
 
   ## Macro helpers

@@ -10,17 +10,52 @@
 msgid ""
 msgstr ""
 
-#: lib/fleet_bot/discord/commands/register_manager.ex:42
-#, elixir-autogen, elixir-format
-msgid "Global commands initialized: %{num}"
-msgstr ""
-
-#: lib/fleet_bot/discord/commands/register_manager.ex:65
+#: lib/fleet_bot/discord/commands/register_manager.ex:174
 #, elixir-autogen, elixir-format
 msgid "Global Command `%{name}` already correctly registerd, skipping."
 msgstr ""
 
-#: lib/fleet_bot/discord/commands/register_manager.ex:78
+#: lib/fleet_bot/discord/commands/register_manager.ex:188
 #, elixir-autogen, elixir-format
 msgid "Registering Global Command `%{name}`"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:217
+#, elixir-autogen, elixir-format
+msgid "Deleted global command: `%{name}"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:117
+#, elixir-autogen, elixir-format
+msgid "Global commands for `%{module}` already registered"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:142
+#, elixir-autogen, elixir-format
+msgid "Global commands initialized (%{module}): %{num}"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:122
+#, elixir-autogen, elixir-format
+msgid "Initializing global commands: %{module}"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:112
+#, elixir-autogen, elixir-format
+msgid "Module `%{module}` not found, cannot register commands"
+msgstr ""
+
+#: lib/fleet_bot/discord.ex:90
+#, elixir-autogen, elixir-format
+msgid "No module found for command `%{command}`"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:51
+#, elixir-autogen, elixir-format
+msgid "Registered all global commands"
+msgstr ""
+
+#: lib/fleet_bot/discord/commands/register_manager.ex:200
+#, elixir-autogen, elixir-format
+msgid "Updating Global Command `%{name}`"
 msgstr ""

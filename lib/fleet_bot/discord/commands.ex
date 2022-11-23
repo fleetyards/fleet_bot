@@ -3,7 +3,8 @@ defmodule FleetBot.Discord.Commands do
 
   def get_commands,
     do: [
-      FleetBot.Discord.Fleetyards
+      FleetBot.Discord.Fleetyards,
+      FleetBot.Discord.Loaner
     ]
 
   def start_link(opts) do
@@ -14,7 +15,8 @@ defmodule FleetBot.Discord.Commands do
   def init(_opts) do
     children =
       [
-        FleetBot.Discord.Commands.RegisterManager
+        FleetBot.Discord.Commands.RegisterManager,
+        {Task.Supervisor, name: FleetBot.Discord.LoanerSupervisor}
       ] ++ get_supervised_commands()
 
     Supervisor.init(children, strategy: :one_for_one)
