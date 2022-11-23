@@ -1,6 +1,9 @@
 defmodule FleetBot.Discord.Fleetyards do
   alias Nostrum.Api
+
   use FleetBot.Discord.Command
+  use FleetBot.Gettext
+  alias FleetBot.Repo.Discord.FleetyardsAccount
 
   @impl Command
   def command("fleetyards", interaction) do
@@ -13,16 +16,19 @@ defmodule FleetBot.Discord.Fleetyards do
     )
 
     FleetBot.Discord.get_subcommand_name(interaction)
-    |> IO.inspect()
     |> fleetyards_command(interaction)
   end
 
   def fleetyards_command("link", interaction) do
-    nil
+    Api.edit_interaction_response(
+      interaction,
+      create_interaction_response_data(content: "todo", flags: :ephemeral)
+    )
   end
 
-  def fleetyards_command("unlink", interaction) do
-    nil
+  def fleetyards_command("unlink", %Nostrum.Struct.Interaction{user: user} = interaction) do
+    FleetyardsAccount.get_account(user)
+    |> int_fleetyards_unlink(interaction)
   end
 
   @impl Command
@@ -48,5 +54,14 @@ defmodule FleetBot.Discord.Fleetyards do
         ]
       )
     ]
+  end
+
+  # Internal helpers
+  defp int_fleetyards_unlink(nil, interaction) do
+    content = LGettext.dgettext("discord_fleetyards", "Account not linked, cannot unlink.")
+    Api.edit_interaction_response(interaction, create_interaction_response_data(content: content))
+  end
+
+  defp int_fleetyards_unlink(account, interaction) do
   end
 end

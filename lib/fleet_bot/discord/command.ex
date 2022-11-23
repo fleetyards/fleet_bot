@@ -98,4 +98,5 @@ defmodule FleetBot.Discord.Command do
   def interaction_response_data_flags(:suppress_embeds), do: 1 <<< 3
   def interaction_response_data_flags(:ephemeral), do: 1 <<< 6
   def interaction_response_data_flags(v) when is_number(v), do: v
+  def interaction_response_data_flags(nil), do: nil
 end
