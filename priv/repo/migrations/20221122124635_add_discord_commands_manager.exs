@@ -6,6 +6,7 @@ defmodule FleetBot.Repo.Migrations.AddDiscordCommandsManager do
       add :command, :string, null: false
       add :command_id, :bigint
       add :guild_id, :bigint
+      add :cmd_hash, :integer, null: false
     end
 
     create unique_index(:discord_commands, [:command, :guild_id])

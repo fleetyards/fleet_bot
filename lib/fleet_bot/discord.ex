@@ -12,6 +12,7 @@ defmodule FleetBot.Discord do
 
   See: https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-naming
   """
+  alias Nostrum.Consumer
   def chat_command_allowed_regex, do: ~R/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u
 
   @spec validate_snowflake(Ecto.Changeset.t(), atom, Keyword.t()) :: Ecto.Changeset.t()
@@ -41,5 +42,23 @@ defmodule FleetBot.Discord do
     if Keyword.get(opts, :required, true),
       do: validate_required(changeset, field),
       else: changeset
+  end
+
+  use Nostrum.Consumer
+
+  def start_link, do: Consumer.start_link(__MODULE__)
+
+  @impl Nostrum.Consumer
+  def handle_event({:READY, %{}, _ws_state}) do
+    FleetBot.Discord.Commands.RegisterManager.set_ready()
+    :noop
+  end
+
+  @impl true
+  def handle_event(_event) do
+    # event
+    # |> IO.inspect()
+
+    :noop
   end
 end
