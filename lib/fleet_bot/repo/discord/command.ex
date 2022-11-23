@@ -45,6 +45,15 @@ defmodule FleetBot.Repo.Discord.Command do
     |> Repo.update()
   end
 
+  def delete_command(command) when is_binary(command) do
+    get_command(command)
+    |> delete_command()
+  end
+
+  def delete_command(%__MODULE__{} = command) do
+    Repo.delete(command)
+  end
+
   def get_command(name, guild_id \\ nil)
 
   def get_command(name, nil) when is_binary(name) do

@@ -5,7 +5,7 @@ defmodule FleetBot.Discord do
   import Ecto.Changeset
 
   @spec chat_command_allowed_regex() :: Regex.t()
-  @moduledoc """
+  @doc """
   Regex matcher for the discord allowed command string.
 
   Converted from discords `^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$` Regex.
