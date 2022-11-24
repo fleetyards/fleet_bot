@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.29.1">
     <meta name="project" content="fleet_bot v0.1.0">
 
-    <title>FleetBot.Discord.Command — fleet_bot v0.1.0</title>
+    <title>FleetBot.Fleetyards.Models — fleet_bot v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
 
 
@@ -21,7 +21,7 @@
 
 
   </head>
-  <body data-type="modules" class="page-behaviour">
+  <body data-type="modules" class="page-module">
     <script>
 
       try {
@@ -96,7 +96,7 @@ fleet_bot
 </button>
 
 
-  <span translate="no">FleetBot.Discord.Command</span> <small>behaviour</small>
+  <span translate="no">FleetBot.Fleetyards.Models</span> 
   <small class="app-vsn" translate="no">(fleet_bot v0.1.0)</small>
 
 </h1>
@@ -111,32 +111,18 @@ fleet_bot
       </a>
       Summary
     </h1>
-<div class="summary-callbacks summary">
+<div class="summary-types summary">
   <h2>
-    <a href="#callbacks">Callbacks</a>
+    <a href="#types">Types</a>
   </h2>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:command/2" translate="no">command(t, %Nostrum.Struct.Interaction{})</a>
+        <a href="#t:t/0" translate="no">t()</a>
 
       </div>
 
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#c:global_commands/0" translate="no">global_commands()</a>
-
-      </div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#c:remove_global_commands/0" translate="no">remove_global_commands()</a>
-
-      </div>
+        <div class="summary-synopsis"><p>Fleetyards model.</p></div>
 
     </div>
 
@@ -148,33 +134,41 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_interaction_response/2" translate="no">create_interaction_response(type, data \\ nil)</a>
+        <a href="#get_discord_slug_choices/3" translate="no">get_discord_slug_choices(search, num \\ 25, timeout \\ 1000)</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Search Fleetyards for slug, and return discord autocompletion result.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_interaction_response_data/1" translate="no">create_interaction_response_data(opts \\ [])</a>
+        <a href="#model/1" translate="no">model(slug)</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Get Fleetyards model by slug.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#interaction_response_data_flags/1" translate="no">interaction_response_data_flags(flags)</a>
+        <a href="#search_slug/2" translate="no">search_slug(search, num \\ nil)</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Search Fleetyards for slug.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#interaction_response_type/1" translate="no">interaction_response_type(v)</a>
+        <a href="#slugs/0" translate="no">slugs()</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Get a List of all current Model slugs</p></div>
 
     </div>
 
@@ -183,23 +177,23 @@ fleet_bot
   </section>
 
 
-  <section id="callbacks" class="details-list">
+  <section id="types" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#callbacks">
+      <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
-Callbacks
+Types
     </h1>
-    <div class="callbacks-list">
-<section class="detail" id="c:command/2">
+    <div class="types-list">
+<section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#c:command/2" class="detail-link" title="Link to this callback">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
+      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">command(t, %Nostrum.Struct.Interaction{})</h1>
+    <h1 class="signature" translate="no">t()</h1>
 
 
   </div>
@@ -208,77 +202,11 @@ Callbacks
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@callback</span> command(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), %Nostrum.Struct.Interaction{
-  application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  channel_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  data: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  guild_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  guild_locale: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  locale: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  member: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  message: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  token: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  type: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  user: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  version: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-}) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> t() :: %{name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), slug: <a href="FleetBot.Fleetyards.html#t:slug/0">FleetBot.Fleetyards.slug</a>()}</pre>
 
       </div>
 
-
-  </section>
-</section>
-<section class="detail" id="c:global_commands/0">
-
-  <div class="detail-header">
-    <a href="#c:global_commands/0" class="detail-link" title="Link to this callback">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
-    </a>
-    <h1 class="signature" translate="no">global_commands()</h1>
-
-
-      <span class="note">(optional)</span>
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@callback</span> global_commands() :: [
-  <a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.ApplicationCommand.html#t:application_command_map/0">Nostrum.Struct.ApplicationCommand.application_command_map</a>()
-]</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="c:remove_global_commands/0">
-
-  <div class="detail-header">
-    <a href="#c:remove_global_commands/0" class="detail-link" title="Link to this callback">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
-    </a>
-    <h1 class="signature" translate="no">remove_global_commands()</h1>
-
-
-      <span class="note">(optional)</span>
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@callback</span> remove_global_commands() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
-
-      </div>
-
-
+<p>Fleetyards model.</p>
   </section>
 </section>
 
@@ -294,80 +222,125 @@ Callbacks
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="create_interaction_response/2">
+<section class="detail" id="get_discord_slug_choices/3">
 
-    <span id="create_interaction_response/1"></span>
+    <span id="get_discord_slug_choices/1"></span>
 
-  <div class="detail-header">
-    <a href="#create_interaction_response/2" class="detail-link" title="Link to this macro">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <h1 class="signature" translate="no">create_interaction_response(type, data \\ nil)</h1>
-
-
-      <span class="note">(macro)</span>
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_interaction_response_data/1">
-
-    <span id="create_interaction_response_data/0"></span>
+    <span id="get_discord_slug_choices/2"></span>
 
   <div class="detail-header">
-    <a href="#create_interaction_response_data/1" class="detail-link" title="Link to this macro">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <h1 class="signature" translate="no">create_interaction_response_data(opts \\ [])</h1>
-
-
-      <span class="note">(macro)</span>
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="interaction_response_data_flags/1">
-
-  <div class="detail-header">
-    <a href="#interaction_response_data_flags/1" class="detail-link" title="Link to this function">
+    <a href="#get_discord_slug_choices/3" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">interaction_response_data_flags(flags)</h1>
+    <h1 class="signature" translate="no">get_discord_slug_choices(search, num \\ 25, timeout \\ 1000)</h1>
 
 
   </div>
 
   <section class="docstring">
 
+      <div class="specs">
 
+          <pre translate="no"><span class="attribute">@spec</span> get_discord_slug_choices(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()) :: [
+  %{value: <a href="FleetBot.Fleetyards.html#t:slug/0">FleetBot.Fleetyards.slug</a>(), name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}
+]</pre>
+
+      </div>
+
+<p>Search Fleetyards for slug, and return discord autocompletion result.</p><h2 id="get_discord_slug_choices/3-example" class="section-heading">
+  <a href="#get_discord_slug_choices/3-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  iex&gt; get_discord_slug_choices(&quot;touring&quot;)
+  [%{name: &quot;600i Touring&quot;, value: &quot;600i-touring&quot;}]</p>
   </section>
 </section>
-<section class="detail" id="interaction_response_type/1">
+<section class="detail" id="model/1">
 
   <div class="detail-header">
-    <a href="#interaction_response_type/1" class="detail-link" title="Link to this function">
+    <a href="#model/1" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">interaction_response_type(v)</h1>
+    <h1 class="signature" translate="no">model(slug)</h1>
 
 
   </div>
 
   <section class="docstring">
 
+      <div class="specs">
 
+          <pre translate="no"><span class="attribute">@spec</span> model(<a href="FleetBot.Fleetyards.html#t:slug/0">FleetBot.Fleetyards.slug</a>()) :: {:ok, <a href="#t:t/0">t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Get Fleetyards model by slug.</p>
+  </section>
+</section>
+<section class="detail" id="search_slug/2">
+
+    <span id="search_slug/1"></span>
+
+  <div class="detail-header">
+    <a href="#search_slug/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">search_slug(search, num \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> search_slug(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()) :: [<a href="FleetBot.Fleetyards.html#t:slug/0">FleetBot.Fleetyards.slug</a>()]</pre>
+
+      </div>
+
+<p>Search Fleetyards for slug.</p><h2 id="search_slug/2-example" class="section-heading">
+  <a href="#search_slug/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  iex&gt; search_slug(&quot;touring&quot;)
+  [&quot;600i-touring&quot;]</p>
+  </section>
+</section>
+<section class="detail" id="slugs/0">
+
+  <div class="detail-header">
+    <a href="#slugs/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">slugs()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> slugs() :: [<a href="FleetBot.Fleetyards.html#t:slug/0">FleetBot.Fleetyards.slug</a>()]</pre>
+
+      </div>
+
+<p>Get a List of all current Model slugs</p><h2 id="slugs/0-example" class="section-heading">
+  <a href="#slugs/0-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">slugs</span><span class="p" data-group-id="0787023357-1">(</span><span class="p" data-group-id="0787023357-1">)</span><span class="w">
+</span><span class="p" data-group-id="0787023357-2">[</span><span class="s">&quot;msr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;600i-touring&quot;</span><span class="p" data-group-id="0787023357-2">]</span></code></pre>
   </section>
 </section>
 

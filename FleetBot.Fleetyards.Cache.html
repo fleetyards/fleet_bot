@@ -7,13 +7,13 @@
     <meta name="generator" content="ExDoc v0.29.1">
     <meta name="project" content="fleet_bot v0.1.0">
 
-    <title>FleetBot.Fleetyards.Session — fleet_bot v0.1.0</title>
+    <title>FleetBot.Fleetyards.Cache — fleet_bot v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-A1024517.js"></script>
+    <script src="dist/sidebar_items-82C5F98B.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -96,7 +96,7 @@ fleet_bot
 </button>
 
 
-  <span translate="no">FleetBot.Fleetyards.Session</span> 
+  <span translate="no">FleetBot.Fleetyards.Cache</span> 
   <small class="app-vsn" translate="no">(fleet_bot v0.1.0)</small>
 
 </h1>
@@ -118,7 +118,17 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#login/2" translate="no">login(username, password)</a>
+        <a href="#generations/0" translate="no">generations()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A convenience function for retrieving the current generations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#match_non_error/1" translate="no">match_non_error(arg1)</a>
 
       </div>
 
@@ -126,9 +136,31 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#logout/1" translate="no">logout(token)</a>
+        <a href="#new_generation/1" translate="no">new_generation(opts \\ [])</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>A convenience function for creating new generations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#newer_generation/0" translate="no">newer_generation()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A convenience function for retrieving the newer generation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#reset_generation_timer/0" translate="no">reset_generation_timer()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A convenience function for reset the GC timer.</p></div>
 
     </div>
 
@@ -146,14 +178,31 @@ fleet_bot
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="login/2">
+<section class="detail" id="generations/0">
 
   <div class="detail-header">
-    <a href="#login/2" class="detail-link" title="Link to this function">
+    <a href="#generations/0" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">login(username, password)</h1>
+    <h1 class="signature" translate="no">generations()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>A convenience function for retrieving the current generations.</p>
+  </section>
+</section>
+<section class="detail" id="match_non_error/1">
+
+  <div class="detail-header">
+    <a href="#match_non_error/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">match_non_error(arg1)</h1>
 
 
   </div>
@@ -163,21 +212,57 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="logout/1">
+<section class="detail" id="new_generation/1">
+
+    <span id="new_generation/0"></span>
 
   <div class="detail-header">
-    <a href="#logout/1" class="detail-link" title="Link to this function">
+    <a href="#new_generation/1" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">logout(token)</h1>
+    <h1 class="signature" translate="no">new_generation(opts \\ [])</h1>
 
 
   </div>
 
   <section class="docstring">
 
+<p>A convenience function for creating new generations.</p>
+  </section>
+</section>
+<section class="detail" id="newer_generation/0">
 
+  <div class="detail-header">
+    <a href="#newer_generation/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">newer_generation()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>A convenience function for retrieving the newer generation.</p>
+  </section>
+</section>
+<section class="detail" id="reset_generation_timer/0">
+
+  <div class="detail-header">
+    <a href="#reset_generation_timer/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">reset_generation_timer()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>A convenience function for reset the GC timer.</p>
   </section>
 </section>
 

@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-A1024517.js"></script>
+    <script src="dist/sidebar_items-82C5F98B.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -140,9 +140,11 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_subcommand_name/1" translate="no">get_subcommand_name(arg1)</a>
+        <a href="#get_subcommand_name/1" translate="no">get_subcommand_name(interaction)</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Get name of subcomand nested in interaction or option.</p></div>
 
     </div>
 
@@ -233,7 +235,7 @@ Functions
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_subcommand_name(arg1)</h1>
+    <h1 class="signature" translate="no">get_subcommand_name(interaction)</h1>
 
 
   </div>
@@ -242,55 +244,31 @@ Functions
 
       <div class="specs">
 
+          <pre translate="no"><span class="attribute">@spec</span> get_subcommand_name(<a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.Interaction.html#t:t/0">Nostrum.Struct.Interaction.t</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+          <pre translate="no"><span class="attribute">@spec</span> get_subcommand_name(<a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.ApplicationCommandInteractionData.html#t:t/0">Nostrum.Struct.ApplicationCommandInteractionData.t</a>()) ::
+  <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
           <pre translate="no"><span class="attribute">@spec</span> get_subcommand_name(
-  %Nostrum.Struct.Interaction{
-    application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    channel_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    data: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    guild_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    guild_locale: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    locale: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    member: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    message: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    token: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    type: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    user: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-    version: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-  }
-  | %Nostrum.Struct.ApplicationCommandInteractionData{
-      component_type: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      components: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      custom_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      name: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      options: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      resolved: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      target_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      type: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      values: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-    }
-  | [
-      %Nostrum.Struct.ApplicationCommandInteractionDataOption{
-        focused: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-        name: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-        options: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-        type: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-        value: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-      }
-    ]
-  | %Nostrum.Struct.ApplicationCommandInteractionDataOption{
-      focused: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      name: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      options: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      type: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-      value: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-    }
+  [<a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.ApplicationCommandInteractionDataOption.html#t:t/0">Nostrum.Struct.ApplicationCommandInteractionDataOption.t</a>()]
+  | <a href="https://hexdocs.pm/nostrum/0.6.1/Nostrum.Struct.ApplicationCommandInteractionDataOption.html#t:t/0">Nostrum.Struct.ApplicationCommandInteractionDataOption.t</a>()
 ) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
 
       </div>
 
+<p>Get name of subcomand nested in interaction or option.</p><h2 id="get_subcommand_name/1-example" class="section-heading">
+  <a href="#get_subcommand_name/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">get_subcommand_name</span><span class="p" data-group-id="4445397312-1">(</span><span class="p" data-group-id="4445397312-2">%</span><span class="nc" data-group-id="4445397312-2">Nostrum.Struct.ApplicationCommandInteractionDataOption</span><span class="p" data-group-id="4445397312-2">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foo&quot;</span><span class="p" data-group-id="4445397312-2">}</span><span class="p" data-group-id="4445397312-1">)</span><span class="w">
+</span><span class="s">&quot;foo&quot;</span><span class="w">
 
+</span><span class="gp unselectable">iex&gt; </span><span class="n">get_subcommand_name</span><span class="p" data-group-id="4445397312-3">(</span><span class="p" data-group-id="4445397312-4">%</span><span class="nc" data-group-id="4445397312-4">Nostrum.Struct.ApplicationCommandInteractionData</span><span class="p" data-group-id="4445397312-4">{</span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4445397312-5">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4445397312-6">%</span><span class="nc" data-group-id="4445397312-6">Nostrum.Struct.ApplicationCommandInteractionDataOption</span><span class="p" data-group-id="4445397312-6">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p" data-group-id="4445397312-6">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="4445397312-5">]</span><span class="p" data-group-id="4445397312-4">}</span><span class="p" data-group-id="4445397312-3">)</span><span class="w">
+</span><span class="s">&quot;bar&quot;</span></code></pre>
   </section>
 </section>
 <section class="detail" id="start_link/0">
@@ -362,7 +340,7 @@ Functions
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">validate_snowflake</span><span class="p" data-group-id="4820231968-1">(</span><span class="n">changeset</span><span class="p">,</span><span class="w"> </span><span class="ss">:guild_id</span><span class="p" data-group-id="4820231968-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="n">validate_snowflake</span><span class="p" data-group-id="9248093455-1">(</span><span class="n">changeset</span><span class="p">,</span><span class="w"> </span><span class="ss">:guild_id</span><span class="p" data-group-id="9248093455-1">)</span></code></pre>
   </section>
 </section>
 
