@@ -16,6 +16,20 @@ config :fleet_bot, FleetBot.Fleetyards,
   api_url: "https://api.fleetyards.net",
   client: FleetBot.Fleetyards.Client
 
+config :fleet_bot, FleetBot.Fleetyards.Cache,
+  # When using :shards as backend
+  backend: :shards,
+  # GC interval for pushing new generation: 12 hrs
+  gc_interval: :timer.hours(3),
+  # Max 500 thousand entries in cache
+  max_size: 500_000,
+  # Max 500 MB of memory
+  allocated_memory: 500_000_000,
+  # GC min timeout: 10 sec
+  gc_cleanup_min_timeout: :timer.seconds(10),
+  # GC max timeout: 10 min
+  gc_cleanup_max_timeout: :timer.minutes(10)
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

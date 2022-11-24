@@ -38,6 +38,15 @@ defmodule FleetBot.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
 
+      # Cache
+      {:nebulex, "~> 2.4"},
+      # => When using :shards as backend
+      {:shards, "~> 1.0"},
+      # => When using Caching Annotations
+      {:decorator, "~> 1.4"},
+      # => When using the Telemetry events (Nebulex stats)
+      {:telemetry, "~> 1.0"},
+
       # Gettext
       {:gettext, "~> 0.20"},
 

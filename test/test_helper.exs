@@ -22,11 +22,13 @@ defmodule FleetBot.ExUnitCase do
   end
 end
 
+Application.ensure_started(:nebulex)
 # Start the Ecto repository so we can use it in tests.
 {:ok, _pid} =
   Supervisor.start_link(
     [
       FleetBot.Repo,
+      FleetBot.Fleetyards.Supervisor,
       Mox.Server
     ],
     strategy: :one_for_one
