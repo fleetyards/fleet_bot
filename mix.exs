@@ -43,7 +43,8 @@ defmodule FleetBot.MixProject do
 
       # Dev
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
+      {:mox, "~> 0.5.2", only: :test}
     ]
   end
 
@@ -53,7 +54,7 @@ defmodule FleetBot.MixProject do
       # , "run priv/repo/seeds.exs"
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.rollback --all", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --no-start"],
       fmt: ["format"]
     ]
   end

@@ -45,17 +45,32 @@ defmodule FleetBot.Discord do
       else: changeset
   end
 
-  @spec get_subcommand_name(
-          %Nostrum.Struct.Interaction{}
-          | %Nostrum.Struct.ApplicationCommandInteractionData{}
-          | [%Nostrum.Struct.ApplicationCommandInteractionDataOption{}]
-          | %Nostrum.Struct.ApplicationCommandInteractionDataOption{}
-        ) :: String.t()
+  @doc """
+  Get name of subcomand nested in interaction or option.
+
+  ## Example
+
+      iex> get_subcommand_name(%Nostrum.Struct.ApplicationCommandInteractionDataOption{name: "foo"})
+      "foo"
+
+      iex> get_subcommand_name(%Nostrum.Struct.ApplicationCommandInteractionData{options: [
+      ...>   %Nostrum.Struct.ApplicationCommandInteractionDataOption{name: "bar"}
+      ...> ]})
+      "bar"
+  """
+  def get_subcommand_name(interaction)
+
+  @spec get_subcommand_name(Nostrum.Struct.Interaction.t()) :: String.t()
   def get_subcommand_name(%Nostrum.Struct.Interaction{data: data}), do: get_subcommand_name(data)
 
+  @spec get_subcommand_name(Nostrum.Struct.ApplicationCommandInteractionData.t()) :: String.t()
   def get_subcommand_name(%Nostrum.Struct.ApplicationCommandInteractionData{options: options}),
     do: get_subcommand_name(options)
 
+  @spec get_subcommand_name(
+          [Nostrum.Struct.ApplicationCommandInteractionDataOption.t()]
+          | Nostrum.Struct.ApplicationCommandInteractionDataOption.t()
+        ) :: String.t()
   def get_subcommand_name([option | _]), do: get_subcommand_name(option)
 
   def get_subcommand_name(%Nostrum.Struct.ApplicationCommandInteractionDataOption{name: name}),
@@ -84,6 +99,7 @@ defmodule FleetBot.Discord do
     RegisterManager.get_module(name)
     |> case do
       module when is_atom(module) ->
+        # TODO: move onto task
         apply(module, :command, [name, interaction])
 
       nil ->

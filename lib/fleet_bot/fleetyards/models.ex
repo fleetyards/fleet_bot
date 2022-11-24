@@ -1,6 +1,15 @@
 defmodule FleetBot.Fleetyards.Models do
   use FleetBot.Fleetyards
 
+  @doc """
+  Get a List of all current Model slugs
+
+  ## Example
+
+      iex> slugs()
+      ["msr", "600i-touring"]
+  """
+  @spec slugs() :: [String.t()]
   # TODO: cache
   def slugs() do
     with {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_list(body) <-

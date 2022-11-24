@@ -1,7 +1,9 @@
 import Config
 
 config :nostrum,
-  token: System.get_env("FLEET_BOT_TOKEN", "")
+  dev: true
+
+config :fleet_bot, FleetBot.Fleetyards, client: FleetBot.Fleetyards.ClientMock
 
 config :fleet_bot, FleetBot.Repo,
   username: "fleet_bot_test",
