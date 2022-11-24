@@ -32,4 +32,8 @@ config :fleet_bot, FleetBot.Fleetyards.Cache,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
+if Kernel.macro_exported?(Config, :config_env, 0) do
+  import_config "#{Config.config_env()}.exs"
+else
+  import_config "#{Mix.env()}.exs"
+end
