@@ -80,7 +80,7 @@ defmodule FleetBot.Discord.Loaner do
             options: [
               %Nostrum.Struct.ApplicationCommandInteractionDataOption{
                 focused: nil,
-                name: "gives",
+                name: "ship",
                 value: slug
               }
             ]
@@ -120,16 +120,16 @@ defmodule FleetBot.Discord.Loaner do
         member_permissions: :send_message,
         dm_permission: true,
         options: [
-          create_option("gives", "Conceptship that gives loaners",
+          create_option("ship", "Conceptship that gives loaners",
             type: :string,
             min_lenght: 2,
             autocomplete: true
-          ),
-          create_option("gets", "Ship that is given by concept ship",
-            type: :string,
-            min_length: 2,
-            autocompelte: true
           )
+          # create_option("gets", "Ship that is given by concept ship",
+          #  type: :string,
+          #  min_length: 2,
+          #  autocompelte: true
+          # )
         ]
       )
     ]
@@ -138,9 +138,11 @@ defmodule FleetBot.Discord.Loaner do
   ## Internal functions
   # gives task
   def search(interaction_token, slug, :gives) do
-    with {:ok, model} <- Models.model(slug) do
-      Api.edit_interaction_response!(interaction_token, format_loaners(model, :gives))
-    else
+    Models.model(slug)
+    |> case do
+      {:ok, model} ->
+        Api.edit_interaction_response!(interaction_token, format_loaners(model, :gives))
+
       {:error, :not_found} ->
         Api.edit_interaction_response!(
           interaction_token,
@@ -176,22 +178,24 @@ defmodule FleetBot.Discord.Loaner do
   end
 
   def format_loaner(%{"name" => name, "slug" => slug}) do
-    with {:ok, model} <- Models.model(slug) do
-      %{
-        type: "rich",
-        title: Map.get(model, "name"),
-        description: Map.get(model, "description"),
-        # TODO: get color based on ship size
-        color: 0,
-        image: %{
-          url: Map.get(model, "storeImageMedium")
-        },
-        author: %{
-          name: Map.get(model, "manufacturer") |> Map.get("name")
-        },
-        url: Map.get(model, "links") |> Map.get("frontend")
-      }
-    else
+    Models.model(slug)
+    |> case do
+      {:ok, model} ->
+        %{
+          type: "rich",
+          title: Map.get(model, "name"),
+          description: Map.get(model, "description"),
+          # TODO: get color based on ship size
+          color: 0,
+          image: %{
+            url: Map.get(model, "storeImageMedium")
+          },
+          author: %{
+            name: Map.get(model, "manufacturer") |> Map.get("name")
+          },
+          url: Map.get(model, "links") |> Map.get("frontend")
+        }
+
       _ ->
         %{
           type: "rich",

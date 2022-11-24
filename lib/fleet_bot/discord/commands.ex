@@ -3,7 +3,7 @@ defmodule FleetBot.Discord.Commands do
 
   def get_commands,
     do: [
-      FleetBot.Discord.Fleetyards,
+      # FleetBot.Discord.Fleetyards,
       FleetBot.Discord.Loaner
     ]
 

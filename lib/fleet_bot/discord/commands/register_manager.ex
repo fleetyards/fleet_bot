@@ -63,7 +63,7 @@ defmodule FleetBot.Discord.Commands.RegisterManager do
       # TODO: count errors/deletes/missing
       apply(module, :delete_global_commands, [])
       |> Stream.map(&remove_global_command/1)
-      |> Enum.into([])
+      |> Stream.run()
     end
 
     {:noreply, state}
@@ -76,32 +76,31 @@ defmodule FleetBot.Discord.Commands.RegisterManager do
          module,
          %{command_modules: modules, module_commands: module_commands} = state
        ) do
-    new_state =
-      Keyword.get(modules, module)
-      |> int_register_global_commands(module)
-      |> case do
-        {:global, commands} ->
-          modules = Keyword.put(modules, module, :global)
+    Keyword.get(modules, module)
+    |> int_register_global_commands(module)
+    |> case do
+      {:global, commands} ->
+        modules = Keyword.put(modules, module, :global)
 
-          commands =
-            commands
-            |> Enum.map(&{&1, module})
-            |> Enum.into(%{})
-            |> Map.merge(module_commands)
+        commands =
+          commands
+          |> Enum.map(&{&1, module})
+          |> Enum.into(%{})
+          |> Map.merge(module_commands)
 
-          state
-          |> Map.put(:command_modules, modules)
-          |> Map.put(:module_commands, commands)
+        state
+        |> Map.put(:command_modules, modules)
+        |> Map.put(:module_commands, commands)
 
-        v when is_atom(v) ->
-          Keyword.put(modules, module, :global)
+      v when is_atom(v) ->
+        modules = Keyword.put(modules, module, :global)
 
-          state
-          |> Map.put(:command_modules, modules)
+        state
+        |> Map.put(:command_modules, modules)
 
-        _ ->
-          state
-      end
+      _ ->
+        state
+    end
   end
 
   defp int_register_global_commands(:none, module) when is_atom(module) do
@@ -195,13 +194,15 @@ defmodule FleetBot.Discord.Commands.RegisterManager do
   end
 
   defp int_update_global_command(%{} = command, %{command_id: old_id} = old_command, hash) do
-    with {:ok, %{id: command_id, name: name}} <-
-           Nostrum.Api.edit_global_application_command(old_id, command) do
-      LGettext.info("Updating Global Command `%{name}`", name: name)
+    Nostrum.Api.edit_global_application_command(old_id, command)
+    |> case do
+      {:ok, %{id: command_id, name: name}} ->
+        LGettext.info("Updating Global Command `%{name}`", name: name)
 
-      {name, Command.update_command(old_command, hash, command_id)}
-    else
-      {:error, _} = e -> e
+        {name, Command.update_command(old_command, hash, command_id)}
+
+      e ->
+        e
     end
   end
 

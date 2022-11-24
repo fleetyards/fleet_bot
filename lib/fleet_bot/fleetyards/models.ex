@@ -31,10 +31,11 @@ defmodule FleetBot.Fleetyards.Models do
             )
   # TODO: cache
   def slugs() do
-    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_list(body) <-
-           @backend.get("/v1/models/slugs") do
-      body
-    else
+    @backend.get("/v1/models/slugs")
+    |> case do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_list(body) ->
+        body
+
       _ ->
         []
     end
@@ -51,10 +52,11 @@ defmodule FleetBot.Fleetyards.Models do
               opts: [ttl: @ttl]
             )
   def model(slug) when is_binary(slug) do
-    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_map(body) <-
-           @backend.get("/v1/models/" <> slug) do
-      {:ok, body}
-    else
+    @backend.get("/v1/models/" <> slug)
+    |> case do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_map(body) ->
+        {:ok, body}
+
       {:ok, %HTTPoison.Response{status_code: 404, body: %{"code" => "not_found"}}} ->
         {:error, :not_found}
 
