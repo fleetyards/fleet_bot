@@ -55,14 +55,14 @@
 
       legacyPackages = forAllSystems (system: nixpkgsFor.${system});
 
-      #nixosModules = {
-      #  fleet_bot = import ./nix/flett_bot.nix;
-      #  default = self.nixosModules.fleet_bot;
-      #};
+      nixosModules = {
+        fleet_bot = import ./nix/fleet_bot.nix;
+        default = self.nixosModules.fleet_bot;
+      };
 
     };
 
-    nixConfig = {
+  nixConfig = {
     extra-substituters = [ "https://fleetbot.cachix.org" ];
     extra-trusted-public-keys =
       [ "fleetbot.cachix.org-1:LCc89Bys++LoaCDgLuO47dcIoSFlRlPvXchGkr5LJLc=" ];
