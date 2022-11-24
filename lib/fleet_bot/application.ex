@@ -7,10 +7,10 @@ defmodule FleetBot.Application do
     children = [
       FleetBot.Repo,
       FleetBot.Discord.Commands,
-      FleetBot.Discord
+      FleetBot.Discord,
+      FleetBot.Fleetyards.Supervisor
     ]
 
-    # TODO: use stragety :rest_for_one?
     opts = [strategy: :one_for_one, name: FleetBot.Supervisor]
     Supervisor.start_link(children, opts)
   end

@@ -38,12 +38,22 @@ defmodule FleetBot.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
 
+      # Cache
+      {:nebulex, "~> 2.4"},
+      # => When using :shards as backend
+      {:shards, "~> 1.0"},
+      # => When using Caching Annotations
+      {:decorator, "~> 1.4"},
+      # => When using the Telemetry events (Nebulex stats)
+      {:telemetry, "~> 1.0"},
+
       # Gettext
       {:gettext, "~> 0.20"},
 
       # Dev
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
+      {:mox, "~> 0.5.2", only: :test}
     ]
   end
 
@@ -53,7 +63,7 @@ defmodule FleetBot.MixProject do
       # , "run priv/repo/seeds.exs"
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.rollback --all", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --no-start"],
       fmt: ["format"]
     ]
   end

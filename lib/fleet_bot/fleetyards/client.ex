@@ -3,6 +3,8 @@ defmodule FleetBot.Fleetyards.Client do
 
   def api_url(), do: Application.fetch_env!(:fleet_bot, FleetBot.Fleetyards)[:api_url]
 
+  @overwrite_headers ~w(content-type user-agent)
+
   @impl HTTPoison.Base
   def process_request_url(path) do
     api_url() <> path
@@ -21,9 +23,11 @@ defmodule FleetBot.Fleetyards.Client do
     [
       {"Content-Type", "application/json"},
       {"User-Agent",
-       "FleetBot/#{get_version} (#{:erlang.system_info(:system_architecture)}) OTP/#{:erlang.system_info(:otp_release)} (#{String.trim(:binary.list_to_bin(:erlang.system_info(:system_version)))})"}
-      | Enum.filter(headers, fn {header, _value} -> String.downcase(header) != "content-type" end)
-        |> Enum.filter(fn {header, _value} -> String.downcase(header) != "user-agent" end)
+       "FleetBot/#{get_version()} (#{:erlang.system_info(:system_architecture)}) OTP/#{:erlang.system_info(:otp_release)} (#{String.trim(:binary.list_to_bin(:erlang.system_info(:system_version)))})"}
+      | Enum.filter(headers, fn {header, _value} ->
+          header = String.downcase(header)
+          Enum.member?([@overwrite_headers], header)
+        end)
     ]
   end
 

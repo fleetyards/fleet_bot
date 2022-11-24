@@ -1,0 +1,66 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new translations manually only if they're dynamic
+## translations that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+msgid ""
+msgstr ""
+
+#: lib/fleet_bot/discord/Fleetyards.ex:63
+#, elixir-autogen, elixir-format
+msgid "Account not linked, cannot unlink."
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:153
+#, elixir-autogen, elixir-format
+msgid "Ship `%{name}` does not provide any loaners"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:171
+#, elixir-autogen, elixir-format
+msgid "Ship `%{name}` provides the following loaners:"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:147
+#, elixir-autogen, elixir-format
+msgid "Ship `%{slug}` not found"
+msgstr ""
+
+#: lib/fleet_bot/discord/Fleetyards.ex:25
+#, elixir-autogen, elixir-format
+msgid "todo"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:123
+#, elixir-autogen, elixir-format
+msgid "Conceptship that gives loaners"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:128
+#, elixir-autogen, elixir-format
+msgid "Ship that is given by concept ship"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:119
+#, elixir-autogen, elixir-format
+msgid "Star Citizen Loaner informations"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:128
+#, elixir-autogen, elixir-format
+msgid "gets"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:123
+#, elixir-autogen, elixir-format
+msgid "gives"
+msgstr ""
+
+#: lib/fleet_bot/discord/loaner.ex:119
+#, elixir-autogen, elixir-format
+msgid "loaner"
+msgstr ""
