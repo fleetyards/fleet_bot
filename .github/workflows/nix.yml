@@ -1,9 +1,12 @@
 name: "Nix build"
 on:
-  pull_request:
   push:
+    branches: [ "main", "staging", "trying" ]
+    tags: ['v*']
+  pull_request:
+    branches: [ "main" ]
 jobs:
-  tests:
+  nix-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
