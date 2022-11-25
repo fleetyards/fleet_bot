@@ -29,9 +29,8 @@ defmodule FleetBot.Discord.Hangar do
       create_interaction_response(:deferred_channel_message_with_source)
     )
 
-    IO.inspect(args)
-
     Task.Supervisor.async_nolink(@task_sup, __MODULE__, :public, [interaction_token, args])
+    :ok
   end
 
   @impl Command
@@ -155,7 +154,6 @@ defmodule FleetBot.Discord.Hangar do
   def format_manufacturer({%{"name" => name}, vehicles}) do
     vehicles =
       vehicles
-      |> Enum.map(&IO.inspect/1)
       |> Enum.map(&format_vehicle/1)
       |> Enum.join("\n")
 
