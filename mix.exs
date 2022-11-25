@@ -47,6 +47,9 @@ defmodule FleetBot.MixProject do
       # => When using the Telemetry events (Nebulex stats)
       {:telemetry, "~> 1.0"},
 
+      # Status
+      {:appsignal, "~> 2.0"},
+
       # Gettext
       {:gettext, "~> 0.20"},
 

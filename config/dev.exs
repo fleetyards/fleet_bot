@@ -12,3 +12,10 @@ config :fleet_bot, FleetBot.Repo,
   show_sensitive_data_on_connection_error: true
 
 config :logger, :console, metadata: [:shard, :guild, :channel]
+
+if System.get_env("FLEET_BOT_APPSIGNAL") != nil do
+  config :appsignal, :config,
+    active: true,
+    env: :dev,
+    push_api_key: System.fetch_env!("FLEET_BOT_APPSIGNAL")
+end

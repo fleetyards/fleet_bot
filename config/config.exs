@@ -30,6 +30,12 @@ config :fleet_bot, FleetBot.Fleetyards.Cache,
   # GC max timeout: 10 min
   gc_cleanup_max_timeout: :timer.minutes(10)
 
+
+# Appsignal
+config :appsignal, :config,
+  otp_app: :fleet_bot,
+  name: "fleet_bot"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 if Kernel.macro_exported?(Config, :config_env, 0) do
