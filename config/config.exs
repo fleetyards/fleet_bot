@@ -30,7 +30,6 @@ config :fleet_bot, FleetBot.Fleetyards.Cache,
   # GC max timeout: 10 min
   gc_cleanup_max_timeout: :timer.minutes(10)
 
-
 # Appsignal
 config :appsignal, :config,
   otp_app: :fleet_bot,

@@ -1,5 +1,5 @@
 defmodule FleetBot.Discord.Command do
-  @callback command(String.t(), %Nostrum.Struct.Interaction{}) :: term()
+  @callback command(String.t(), %Nostrum.Struct.Interaction{}) :: :ok | {:error, term()}
 
   @callback global_commands() :: [Nostrum.Struct.ApplicationCommand.application_command_map()]
   @callback remove_global_commands() :: [String.t()]

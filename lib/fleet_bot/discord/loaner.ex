@@ -14,7 +14,7 @@ defmodule FleetBot.Discord.Loaner do
           data: %Nostrum.Struct.ApplicationCommandInteractionData{options: nil}
         } = interaction
       ) do
-    Api.create_interaction_response!(
+    Api.create_interaction_response(
       interaction,
       create_interaction_response(
         :channel_message_with_source,
@@ -58,7 +58,7 @@ defmodule FleetBot.Discord.Loaner do
           }
         } = interaction
       ) do
-    Api.create_interaction_response!(
+    Api.create_interaction_response(
       interaction,
       create_interaction_response(
         :application_command_autocomplete_result,
@@ -96,6 +96,8 @@ defmodule FleetBot.Discord.Loaner do
     )
 
     Task.Supervisor.async_nolink(@task_sup, __MODULE__, :search, [interaction_token, slug, :gives])
+
+    {:ok}
   end
 
   # @impl Command
