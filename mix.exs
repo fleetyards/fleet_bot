@@ -40,12 +40,13 @@ defmodule FleetBot.MixProject do
 
       # Cache
       {:nebulex, "~> 2.4"},
-      # => When using :shards as backend
       {:shards, "~> 1.0"},
-      # => When using Caching Annotations
       {:decorator, "~> 1.4"},
-      # => When using the Telemetry events (Nebulex stats)
       {:telemetry, "~> 1.0"},
+
+      # Status
+      {:appsignal, "~> 2.0"},
+      {:telemetry_metrics_appsignal, "~> 1.0"},
 
       # Gettext
       {:gettext, "~> 0.20"},

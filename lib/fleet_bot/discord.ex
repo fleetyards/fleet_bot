@@ -96,15 +96,33 @@ defmodule FleetBot.Discord do
          } = interaction, _ws_state}
       )
       when is_binary(name) do
-    RegisterManager.get_module(name)
-    |> case do
-      module when is_atom(module) ->
-        # TODO: move onto task
-        apply(module, :command, [name, interaction])
+    :telemetry.span([:fleet_bot, :discord, :handle_event, :interaction], %{command: name}, fn ->
+      RegisterManager.get_module(name)
+      |> case do
+        module when is_atom(module) ->
+          # TODO: move onto task
+          apply(module, :command, [name, interaction])
+          |> case do
+            :ok ->
+              {:ok, %{command: name}}
 
-      nil ->
-        LGettext.error("No module found for command `%{command}`", command: name)
-    end
+            {:ok} ->
+              {:ok, %{command: name}}
+
+            {:ok, _} ->
+              {:ok, %{command: name}}
+
+            {:error, e} ->
+              {:error, %{message: e}}
+          end
+
+        nil ->
+          LGettext.error("No module found for command `%{command}`", command: name)
+          {:error, %{message: "no module found"}}
+      end
+    end)
+
+    :ok
   end
 
   @impl true

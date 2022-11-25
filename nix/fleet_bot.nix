@@ -203,6 +203,16 @@ in {
                 '';
               };
             };
+            ":appsignal" = {
+              ":config" = mkOption {
+                type = elixirValue;
+                default = {
+                  active = false;
+                  push_api_key = null;
+                };
+                description = mdDoc "appsignal configuration.";
+              };
+            };
           };
         };
       };
