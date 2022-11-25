@@ -8,7 +8,7 @@ defmodule FleetBot.Fleetyards.Vehicles do
   Get all public vehicles by username
   """
   def vehicles(username) when is_binary(username) do
-    @backend.get("/v1/vehicles/" <> username)
+    @backend.get("/v1/vehicles/" <> username <> "?perPage=all")
     |> case do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_list(body) ->
         {:ok, body}
