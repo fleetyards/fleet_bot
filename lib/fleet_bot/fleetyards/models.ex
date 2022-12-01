@@ -82,7 +82,7 @@ defmodule FleetBot.Fleetyards.Models do
 
     if num != nil do
       stream
-      |> Enum.take(25)
+      |> Enum.take(num)
     else
       stream
     end

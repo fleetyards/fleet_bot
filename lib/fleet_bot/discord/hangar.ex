@@ -12,7 +12,6 @@ defmodule FleetBot.Discord.Hangar do
   def command(
         "hangar",
         %Nostrum.Struct.Interaction{
-          token: interaction_token,
           data: %Nostrum.Struct.ApplicationCommandInteractionData{
             options: [
               %Nostrum.Struct.ApplicationCommandInteractionDataOption{
@@ -24,12 +23,7 @@ defmodule FleetBot.Discord.Hangar do
           }
         } = interaction
       ) do
-    Api.create_interaction_response!(
-      interaction,
-      create_interaction_response(:deferred_channel_message_with_source)
-    )
-
-    Task.Supervisor.async_nolink(@task_sup, __MODULE__, :public, [interaction_token, args])
+    Task.Supervisor.async_nolink(@task_sup, __MODULE__, :public, [interaction, args])
     :ok
   end
 
@@ -47,6 +41,10 @@ defmodule FleetBot.Discord.Hangar do
                 type: :string,
                 # TODO: dont require, and get from own discord user <-> fleetyards user link
                 required: true
+              ),
+              create_option("group", "Fleetyards hangar group to filter",
+                type: :string,
+                autocomplete: true
               )
             ]
           )
@@ -56,35 +54,82 @@ defmodule FleetBot.Discord.Hangar do
   end
 
   # Internal functions
+  def public(interaction, [
+        %Nostrum.Struct.ApplicationCommandInteractionDataOption{name: "user", value: user},
+        %Nostrum.Struct.ApplicationCommandInteractionDataOption{
+          name: "group",
+          value: group,
+          focused: true
+        }
+      ]) do
+    Api.create_interaction_response!(
+      interaction,
+      create_interaction_response(:application_command_autocomplete_result, %{
+        choices: Vehicles.get_discord_group_choices(user, group)
+      })
+    )
+  end
+
+  def public(interaction, [%Nostrum.Struct.ApplicationCommandInteractionDataOption{focused: true}]) do
+    Api.create_interaction_response!(
+      interaction,
+      create_interaction_response(:application_command_autocomplete_result, %{choices: []})
+    )
+  end
+
+  def public(interaction, [
+        %Nostrum.Struct.ApplicationCommandInteractionDataOption{name: "user", value: user},
+        %Nostrum.Struct.ApplicationCommandInteractionDataOption{
+          name: "group",
+          value: group,
+          focused: nil
+        }
+      ]) do
+    Api.create_interaction_response!(
+      interaction,
+      create_interaction_response(:deferred_channel_message_with_source)
+    )
+
+    Vehicles.vehicles(user, group: group)
+    |> case do
+      {:ok, vehicles} ->
+        embeds =
+          format_vehicles_embed(vehicles, user)
+          |> Enum.map(fn %{title: title} = embed ->
+            IO.inspect(embed)
+
+            if String.equivalent?(title, user) do
+              Map.put(embed, :title, "#{title} (#{group})")
+            else
+              embed
+            end
+          end)
+
+        Api.edit_interaction_response!(
+          interaction,
+          create_interaction_response_data(embeds: embeds)
+        )
+
+      {:error, :not_found} ->
+        Api.edit_interaction_response!(
+          interaction,
+          create_interaction_response_data(content: "Could not find user: `%{user}`", user: user)
+        )
+    end
+  end
+
   def public(interaction_token, [
         %Nostrum.Struct.ApplicationCommandInteractionDataOption{name: "user", value: user}
       ]) do
+    Api.create_interaction_response!(
+      interaction_token,
+      create_interaction_response(:deferred_channel_message_with_source)
+    )
+
     Vehicles.vehicles(user)
     |> case do
       {:ok, vehicles} ->
-        loaner_slugs =
-          vehicles
-          |> Enum.map(fn %{"model" => model} -> Map.get(model, "loaners") end)
-          |> Enum.concat()
-          |> Enum.map(fn %{"name" => name, "slug" => slug} -> {slug, name} end)
-          |> Enum.sort_by(fn {slug, _} -> slug end)
-          |> Enum.frequencies()
-          |> Enum.into([])
-
-        ships = format_vehicles(vehicles)
-
-        embeds = public_ships(user, ships)
-
-        embeds =
-          loaner_slugs
-          |> format_loaners(user)
-          |> case do
-            nil ->
-              [embeds]
-
-            loaners ->
-              [embeds, loaners]
-          end
+        embeds = format_vehicles_embed(vehicles, user)
 
         Api.edit_interaction_response!(
           interaction_token,
@@ -96,6 +141,31 @@ defmodule FleetBot.Discord.Hangar do
           interaction_token,
           create_interaction_response_data(content: "Could not find user: `%{user}`", user: user)
         )
+    end
+  end
+
+  def format_vehicles_embed(vehicles, user) do
+    loaner_slugs =
+      vehicles
+      |> Enum.map(fn %{"model" => model} -> Map.get(model, "loaners") end)
+      |> Enum.concat()
+      |> Enum.map(fn %{"name" => name, "slug" => slug} -> {slug, name} end)
+      |> Enum.sort_by(fn {slug, _} -> slug end)
+      |> Enum.frequencies()
+      |> Enum.into([])
+
+    ships = format_vehicles(vehicles)
+
+    embeds = public_ships(user, ships)
+
+    loaner_slugs
+    |> format_loaners(user)
+    |> case do
+      nil ->
+        [embeds]
+
+      loaners ->
+        [embeds, loaners]
     end
   end
 
@@ -129,13 +199,14 @@ defmodule FleetBot.Discord.Hangar do
         slug <> if name, do: "##{name}", else: ""
       end)
 
-    vehicles
-    |> Enum.dedup_by(fn %{"model" => %{"slug" => slug}} -> slug end)
-    |> Enum.chunk_by(fn %{"model" => %{"manufacturer" => %{"code" => code}}} -> code end)
-    |> Enum.map(fn [%{"model" => %{"manufacturer" => manufacture}} | _] = models ->
-      {manufacture, models}
-    end)
-    |> Enum.map(&format_manufacturer(&1, counts))
+    ret =
+      vehicles
+      |> Enum.dedup_by(fn %{"model" => %{"slug" => slug}} -> slug end)
+      |> Enum.chunk_by(fn %{"model" => %{"manufacturer" => %{"code" => code}}} -> code end)
+      |> Enum.map(fn [%{"model" => %{"manufacturer" => manufacture}} | _] = models ->
+        {manufacture, models}
+      end)
+      |> Enum.map(&format_manufacturer(&1, counts))
   end
 
   defp format_manufacturer({%{"name" => name}, vehicles}, counts) do
@@ -147,7 +218,7 @@ defmodule FleetBot.Discord.Hangar do
     %{
       name: name,
       value: vehicles,
-      inline: false
+      inline: true
     }
   end
 
@@ -160,7 +231,7 @@ defmodule FleetBot.Discord.Hangar do
     %{
       name: name,
       value: vehicles,
-      inline: false
+      inline: true
     }
   end
 
