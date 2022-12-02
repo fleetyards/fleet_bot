@@ -122,14 +122,4 @@ defmodule FleetBot.Fleetyards.Vehicles do
       }
     end)
   end
-
-  defp add_query(query, opts, key, name, default \\ nil) do
-    value = Keyword.get(opts, key, default)
-
-    if value != nil do
-      [{name, value} | query]
-    else
-      query
-    end
-  end
 end

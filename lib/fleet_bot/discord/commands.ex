@@ -5,7 +5,8 @@ defmodule FleetBot.Discord.Commands do
     do: [
       # FleetBot.Discord.Fleetyards,
       FleetBot.Discord.Loaner,
-      FleetBot.Discord.Hangar
+      FleetBot.Discord.Hangar,
+      FleetBot.Discord.Fleet
     ]
 
   def start_link(opts) do
