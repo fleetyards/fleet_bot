@@ -8,6 +8,7 @@ defmodule FleetBot.Fleetyards.Supervisor do
   @impl Supervisor
   def init(_opts) do
     children = [
+      {Finch, name: MyFinch},
       FleetBot.Fleetyards.Cache,
       {Task.Supervisor, name: FleetBot.Fleetyards.TaskSupervisor}
     ]

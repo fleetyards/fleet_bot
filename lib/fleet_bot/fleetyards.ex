@@ -1,17 +1,44 @@
 defmodule FleetBot.Fleetyards do
+  alias FleetBot.Fleetyards.Client
+
   @typedoc """
   Fleetyards model slug.
   """
   @type slug() :: String.t()
 
-  # do: {"Authorization", "Bearer " <> token}
-  def get_auth_header(token), do: {""}
+  @type error() :: {:error, :not_found} | {:error, String.t()}
+
+  @doc """
+  Get Fleetyards api version
+
+  ## Examples
+    iex> version()
+    {:ok, {"v5.11.4", "Odyssey"}}
+  """
+  @spec version() :: {:ok, {String.t(), String.t()}} :: error()
+  def version do
+    Client.get("/v1/version")
+    |> match_error()
+    |> case do
+      {:ok, %Tesla.Env{body: %{"codename" => codename, "version" => version}}} ->
+        {:ok, {version, codename}}
+
+      v ->
+        v
+    end
+  end
+
+  @doc false
+  def match_error({:ok, %Tesla.Env{status: 404, body: %{"code" => "not_found"}}}),
+    do: {:error, :not_found}
+
+  def match_error(v), do: v
 
   defmacro __using__(_opts) do
     quote do
       alias unquote(__MODULE__)
-      @backend Application.compile_env(:fleet_bot, [FleetBot.Fleetyards, :client])
-      import unquote(__MODULE__), only: [get_auth_header: 1]
+      alias FleetBot.Fleetyards.Client
+      import unquote(__MODULE__), only: [match_error: 1]
     end
   end
 end
