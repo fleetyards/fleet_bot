@@ -1,5 +1,13 @@
 defmodule FleetBot.Discord.Hangar do
-  alias JasonVendored.Encode
+  @moduledoc """
+  Hangar command.
+
+  ## Subcommands
+  ### public
+
+  Shows public hangar of user
+  """
+  alias FleetBot.Fleetyards
   alias Nostrum.Api
   use FleetBot.Discord.Command
   use FleetBot.Gettext
@@ -96,8 +104,6 @@ defmodule FleetBot.Discord.Hangar do
         embeds =
           format_vehicles_embed(vehicles, user)
           |> Enum.map(fn %{title: title} = embed ->
-            IO.inspect(embed)
-
             if String.equivalent?(title, user) do
               Map.put(embed, :title, "#{title} (#{group})")
             else
@@ -126,17 +132,17 @@ defmodule FleetBot.Discord.Hangar do
       create_interaction_response(:deferred_channel_message_with_source)
     )
 
-    Vehicles.vehicles(user)
-    |> case do
-      {:ok, vehicles} ->
-        embeds = format_vehicles_embed(vehicles, user)
+    try do
+      embeds =
+        Vehicles.vehicles(user)
+        |> format_vehicles_embed(user)
 
-        Api.edit_interaction_response!(
-          interaction_token,
-          create_interaction_response_data(embeds: embeds)
-        )
-
-      {:error, :not_found} ->
+      Api.edit_interaction_response!(
+        interaction_token,
+        create_interaction_response_data(embeds: embeds)
+      )
+    rescue
+      e in Fleetyards.ClientError.NotFound ->
         Api.edit_interaction_response!(
           interaction_token,
           create_interaction_response_data(content: "Could not find user: `%{user}`", user: user)
@@ -147,12 +153,11 @@ defmodule FleetBot.Discord.Hangar do
   def format_vehicles_embed(vehicles, user) do
     loaner_slugs =
       vehicles
-      |> Enum.map(fn %{"model" => model} -> Map.get(model, "loaners") end)
-      |> Enum.concat()
-      |> Enum.map(fn %{"name" => name, "slug" => slug} -> {slug, name} end)
+      |> Stream.map(fn %{"model" => model} -> Map.get(model, "loaners") end)
+      |> Stream.concat()
+      |> Stream.map(fn %{"name" => name, "slug" => slug} -> {slug, name} end)
       |> Enum.sort_by(fn {slug, _} -> slug end)
       |> Enum.frequencies()
-      |> Enum.into([])
 
     ships = format_vehicles(vehicles)
 
@@ -212,8 +217,7 @@ defmodule FleetBot.Discord.Hangar do
   defp format_manufacturer({%{"name" => name}, vehicles}, counts) do
     vehicles =
       vehicles
-      |> Enum.map(&format_vehicle(&1, counts))
-      |> Enum.join("\n")
+      |> Enum.map_join("\n", &format_vehicle(&1, counts))
 
     %{
       name: name,
@@ -225,8 +229,7 @@ defmodule FleetBot.Discord.Hangar do
   def format_manufacturer({%{"name" => name}, vehicles}) do
     vehicles =
       vehicles
-      |> Enum.map(&format_vehicle/1)
-      |> Enum.join("\n")
+      |> Enum.map_join("\n", &format_vehicle/1)
 
     %{
       name: name,
@@ -263,8 +266,12 @@ defmodule FleetBot.Discord.Hangar do
         |> case do
           {:ok, model} ->
             {model, count}
+
+          _ ->
+            nil
         end
       end)
+      |> Enum.filter(&(&1 != nil))
       # {FleetBot.Fleetyards.Models.model(slug), count} end)
       |> Enum.sort_by(fn {%{"manufacturer" => %{"code" => code}}, _} -> code end)
       |> Enum.chunk_by(fn {%{"manufacturer" => %{"code" => code}}, _} -> code end)

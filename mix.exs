@@ -30,8 +30,11 @@ defmodule FleetBot.MixProject do
     [
       # Discord
       {:nostrum, "~> 0.6"},
+
+      # Fleetyards
+      {:tesla, "~> 1.4"},
+      {:finch, "~> 0.14.0"},
       {:jason, "~> 1.2"},
-      {:httpoison, "~> 1.8"},
 
       # Database
       {:ecto, "~> 3.8"},
@@ -53,8 +56,7 @@ defmodule FleetBot.MixProject do
 
       # Dev
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
-      {:mox, "~> 0.5.2", only: :test}
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
     ]
   end
 

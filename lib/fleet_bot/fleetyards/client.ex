@@ -1,45 +1,42 @@
 defmodule FleetBot.Fleetyards.Client do
-  use HTTPoison.Base
+  @moduledoc """
+  Tesla HTTP client used for fleetyards api.
+  """
+  use Tesla
 
-  def api_url(), do: Application.fetch_env!(:fleet_bot, FleetBot.Fleetyards)[:api_url]
+  plug Tesla.Middleware.Logger, log_level: &my_log_level/1, filter_headers: ["authorization"]
+  plug Tesla.Middleware.BaseUrl, Application.fetch_env!(:fleet_bot, FleetBot.Fleetyards)[:api_url]
+  plug Tesla.Middleware.JSON
+  plug Tesla.Middleware.Headers, [{"user-agent", get_user_agent_header()}]
+  plug FleetBot.Fleetyards.Tesla.DecodeFleetyardsPagination
 
-  @overwrite_headers ~w(content-type user-agent)
-
-  @impl HTTPoison.Base
-  def process_request_url(path) do
-    api_url() <> path
+  def new(token) do
+    middleware = [{Tesla.Middleware.BearerAuth, :call, [[token: token]]} | __middleware__()]
+    %Tesla.Client{pre: middleware, post: []}
   end
 
-  @impl HTTPoison.Base
-  def process_response_body(body) do
-    case Jason.decode(body) do
-      {:ok, v} -> v
-      _ -> body
-    end
+  def middlewares do
+    @__middleware__
   end
 
-  @impl HTTPoison.Base
-  def process_request_headers(headers) do
+  ## Plug helpers
+  def get_user_agent_header do
     [
-      {"Content-Type", "application/json"},
-      {"User-Agent",
-       "FleetBot/#{get_version()} (#{:erlang.system_info(:system_architecture)}) OTP/#{:erlang.system_info(:otp_release)} (#{String.trim(:binary.list_to_bin(:erlang.system_info(:system_version)))})"}
-      | Enum.filter(headers, fn {header, _value} ->
-          header = String.downcase(header)
-          Enum.member?([@overwrite_headers], header)
-        end)
+      "FleetBot/#{get_version()}",
+      "(#{:erlang.system_info(:system_architecture)}) OTP/#{:erlang.system_info(:otp_release)} (#{String.trim(:binary.list_to_bin(:erlang.system_info(:system_version)))}) ",
+      "Tesla/#{get_version(:tesla)}"
     ]
+    |> Enum.join(" ")
   end
 
-  @impl HTTPoison.Base
-  def process_request_body(%{} = body) do
-    Jason.encode!(body)
+  def get_version(app \\ :fleet_bot) do
+    Application.spec(app)[:vsn]
   end
 
-  @impl HTTPoison.Base
-  def process_request_body(body), do: body
-
-  def get_version() do
-    Application.spec(:fleet_bot)[:vsn]
+  def my_log_level(env) do
+    case env.status do
+      404 -> :info
+      _ -> :default
+    end
   end
 end

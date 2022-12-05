@@ -26,19 +26,11 @@ defmodule FleetBot.Fleetyards.Models do
   @decorate cacheable(
               cache: FleetBot.Fleetyards.Cache,
               key: {__MODULE__, :slugs},
-              match: &Fleetyards.Cache.match_non_error/1,
               opts: [ttl: @ttl]
             )
-  # TODO: cache
   def slugs() do
-    @backend.get("/v1/models/slugs")
-    |> case do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_list(body) ->
-        body
-
-      _ ->
-        []
-    end
+    {:ok, %Tesla.Env{status: 200, body: body}} = Client.get("/v1/models/slugs")
+    body
   end
 
   @doc """
@@ -51,17 +43,12 @@ defmodule FleetBot.Fleetyards.Models do
               match: &Fleetyards.Cache.match_non_error/1,
               opts: [ttl: @ttl]
             )
-  def model(slug) when is_binary(slug) do
-    @backend.get("/v1/models/" <> slug)
+  def model(slug, query \\ %{}) when is_binary(slug) do
+    Client.get("/v1/models/#{slug}", query: query)
+    |> match_error
     |> case do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_map(body) ->
-        {:ok, body}
-
-      {:ok, %HTTPoison.Response{status_code: 404, body: %{"code" => "not_found"}}} ->
-        {:error, :not_found}
-
-      v ->
-        v
+      {:ok, %Tesla.Env{body: body}} -> {:ok, body}
+      e -> e
     end
   end
 
