@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-BD3DE3B5.js"></script>
+    <script src="dist/sidebar_items-42782B0E.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -118,6 +118,14 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
+        <a href="#t:error/0" translate="no">error()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
         <a href="#t:slug/0" translate="no">slug()</a>
 
       </div>
@@ -134,9 +142,11 @@ fleet_bot
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_auth_header/1" translate="no">get_auth_header(token)</a>
+        <a href="#version/0" translate="no">version()</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Get Fleetyards api version</p></div>
 
     </div>
 
@@ -154,6 +164,29 @@ fleet_bot
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:error/0">
+
+  <div class="detail-header">
+    <a href="#t:error/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">error()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> error() :: {:error, :not_found} | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:slug/0">
 
   <div class="detail-header">
@@ -190,21 +223,34 @@ Types
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="get_auth_header/1">
+<section class="detail" id="version/0">
 
   <div class="detail-header">
-    <a href="#get_auth_header/1" class="detail-link" title="Link to this function">
+    <a href="#version/0" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_auth_header(token)</h1>
+    <h1 class="signature" translate="no">version()</h1>
 
 
   </div>
 
   <section class="docstring">
 
+      <div class="specs">
 
+          <pre translate="no"><span class="attribute">@spec</span> version() :: {:ok, {<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}} :: <a href="#t:error/0">error</a>()</pre>
+
+      </div>
+
+<p>Get Fleetyards api version</p><h2 id="version/0-examples" class="section-heading">
+  <a href="#version/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  iex&gt; version()
+  {:ok, {&quot;v5.11.4&quot;, &quot;Odyssey&quot;}}</p>
   </section>
 </section>
 

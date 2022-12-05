@@ -8,8 +8,10 @@ FleetBot.Discord.Loaner.html
 FleetBot.Discord.html
 FleetBot.Fleetyards.Cache.html
 FleetBot.Fleetyards.Client.html
+FleetBot.Fleetyards.ClientError.NotFound.html
 FleetBot.Fleetyards.Models.html
 FleetBot.Fleetyards.Supervisor.html
+FleetBot.Fleetyards.Tesla.DecodeFleetyardsPagination.html
 FleetBot.Fleetyards.Vehicles.html
 FleetBot.Fleetyards.html
 FleetBot.Gettext.html
@@ -44,7 +46,7 @@ dist/merriweather-latin-ext-300-normal-K6L27CZ5.woff2
 dist/merriweather-vietnamese-300-italic-EHHNZPUO.woff2
 dist/merriweather-vietnamese-300-normal-U376L4Z4.woff2
 dist/remixicon-NKANDIL5.woff2
-dist/search_items-DA75C2CF.js
-dist/sidebar_items-BD3DE3B5.js
+dist/search_items-A4695A72.js
+dist/sidebar_items-42782B0E.js
 index.html
 search.html
