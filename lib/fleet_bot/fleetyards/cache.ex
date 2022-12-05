@@ -1,4 +1,7 @@
 defmodule FleetBot.Fleetyards.Cache do
+  @moduledoc """
+  Cache caching fleetyards api responses.
+  """
   use Nebulex.Cache,
     otp_app: :fleet_bot,
     # Maybe update to cluster storage once libcluster is used

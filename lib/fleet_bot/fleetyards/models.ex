@@ -51,7 +51,14 @@ defmodule FleetBot.Fleetyards.Models do
               match: &Fleetyards.Cache.match_non_error/1,
               opts: [ttl: @ttl]
             )
-  def model(slug) when is_binary(slug) do
+  def model(slug, query \\ %{}) when is_binary(slug) do
+    Client.get("/v1/models/#{slug}", query: query)
+    |> match_error
+    |> case do
+      {:ok, %Tesla.Env{body: body}} -> {:ok, body}
+      e -> e
+    end
+
     # @backend.get("/v1/models/" <> slug)
     # |> case do
     #  {:ok, %HTTPoison.Response{status_code: 200, body: body}} when is_map(body) ->

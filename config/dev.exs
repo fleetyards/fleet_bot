@@ -3,6 +3,8 @@ import Config
 config :nostrum,
   token: System.fetch_env!("FLEET_BOT_TOKEN")
 
+# config :fleet_bot, FleetBot.Fleetyards, api_url: "https://stage.fleetyards.net/api"
+
 config :fleet_bot, FleetBot.Repo,
   username: "fleet_bot_dev",
   password: "fleet_bot_dev",

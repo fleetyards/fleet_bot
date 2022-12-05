@@ -13,27 +13,54 @@ defmodule FleetBot.Fleetyards.Vehicles do
     |> case do
       {:ok, %Tesla.Env{body: body, opts: opts}} ->
         {:ok, body, opts}
+
+      e ->
+        e
     end
   end
 
-  def vehicles(username, page \\ 1, query \\ %{}) when is_binary(username) do
-    vehicles_one(username, Map.put(query, "page", page))
-    |> case do
-      {:error, _} = e ->
-        e
+  def vehicles_stream(username, page \\ 1, query \\ %{}) do
+    Stream.resource(
+      fn ->
+        page
+      end,
+      fn
+        x when is_number(x) ->
+          case vehicles_one(username, Map.put(query, "page", x)) do
+            {:ok, elem, opts} ->
+              fleetyards = Keyword.get(opts, :fleetyards, %{})
 
-      {:ok, list, opts} ->
-        rel = Keyword.get(opts, :rels)
+              last = Map.get(fleetyards, "last", %{"page" => x})
 
-        if Map.has_key?(rel, "last") do
-          case vehicles(username, page + 1, query) do
-            {:ok, list_next} -> {:ok, list ++ list_next}
-            {:error, _} = e -> e
+              if Map.get(last, "page") >= x do
+                {elem, x + 1}
+              else
+                {elem, :end}
+              end
+
+            # Retry
+            # TODO: don't try indefinetly?
+            {:error, :timeout} ->
+              {[], x}
+
+            {:error, :not_found} ->
+              raise FleetBot.Fleetyards.ClientError.NotFound, message: "User not found"
+
+            v ->
+              {:halt, v}
           end
-        else
-          {:ok, list}
-        end
-    end
+
+        :end ->
+          {:halt, :end}
+      end,
+      fn _ -> nil end
+    )
+  end
+
+  @deprecated "use vehicles_stream/3"
+  def vehicles(username, page \\ 1, query \\ %{}) when is_binary(username) do
+    vehicles_stream(username, page, query)
+    |> Enum.into([])
   end
 
   @doc """

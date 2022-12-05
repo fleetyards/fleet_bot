@@ -32,6 +32,7 @@ defmodule FleetBot.Fleetyards do
   def match_error({:ok, %Tesla.Env{status: 404, body: %{"code" => "not_found"}}}),
     do: {:error, :not_found}
 
+  def match_error({:error, "timeout"}), do: {:error, :timeout}
   def match_error(v), do: v
 
   defmacro __using__(_opts) do
