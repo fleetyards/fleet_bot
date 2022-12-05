@@ -23,6 +23,7 @@ ExUnit.start()
 # end
 
 Application.ensure_started(:nebulex)
+Application.ensure_started(:tesla)
 # Start the Ecto repository so we can use it in tests.
 {:ok, _pid} =
   Supervisor.start_link(

@@ -1,5 +1,5 @@
 defmodule FleetBot.Fleetyards.VehiclesTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   import Tesla.Mock
   doctest FleetBot.Fleetyards.Vehicles, import: true
 
