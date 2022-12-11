@@ -35,11 +35,15 @@ defmodule FleetBot.Fleetyards do
   def match_error({:error, "timeout"}), do: {:error, :timeout}
   def match_error(v), do: v
 
+  @doc false
+  def unpack_body({:ok, %Tesla.Env{status: 200, body: body}}), do: {:ok, body}
+  def unpack_body(v), do: match_error(v)
+
   defmacro __using__(_opts) do
     quote do
       alias unquote(__MODULE__)
       alias FleetBot.Fleetyards.Client
-      import unquote(__MODULE__), only: [match_error: 1]
+      import unquote(__MODULE__), only: [match_error: 1, unpack_body: 1]
     end
   end
 end
