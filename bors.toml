@@ -1,4 +1,5 @@
-status = [ "Build and test", "nix-build" ]
+status = [ "Build and test%", "nix-build" ]
 block_labels = [ "S-do-not-merge-yet" ]
 cut_body_after = "<details>"
 timeout_sec = 36000 # ten hours
+delete_merged_branches = true
