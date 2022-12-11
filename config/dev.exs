@@ -1,7 +1,7 @@
 import Config
 
 config :nostrum,
-  token: System.fetch_env!("FLEET_BOT_TOKEN")
+  token: System.fetch_env("FLEET_BOT_TOKEN")
 
 # config :fleet_bot, FleetBot.Fleetyards, api_url: "https://stage.fleetyards.net/api"
 
@@ -20,4 +20,8 @@ if System.get_env("FLEET_BOT_APPSIGNAL") != nil do
     active: true,
     env: :dev,
     push_api_key: System.fetch_env!("FLEET_BOT_APPSIGNAL")
+end
+
+if File.exists?("./config/dev.secrets.exs") do
+  import_config "dev.secrets.exs"
 end
