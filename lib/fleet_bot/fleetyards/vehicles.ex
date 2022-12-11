@@ -19,7 +19,7 @@ defmodule FleetBot.Fleetyards.Vehicles do
     end
   end
 
-  def vehicles_stream(username, page \\ 1, query \\ %{}) do
+  def vehicles_stream(username, page \\ 1, query \\ %{"perPage" => 25}) do
     Stream.resource(
       fn ->
         page
@@ -30,9 +30,10 @@ defmodule FleetBot.Fleetyards.Vehicles do
             {:ok, elem, opts} ->
               fleetyards = Keyword.get(opts, :fleetyards, %{})
 
-              last = Map.get(fleetyards, "last", %{"page" => x})
+              last = Map.get(fleetyards, "last", %{"page" => x - 1})
 
               if Map.get(last, "page") >= x do
+                IO.inspect(last)
                 {elem, x + 1}
               else
                 {elem, :end}
