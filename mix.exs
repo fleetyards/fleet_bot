@@ -32,7 +32,7 @@ defmodule FleetBot.MixProject do
       {:nostrum, "~> 0.6"},
 
       # Fleetyards
-      {:tesla, "~> 1.4"},
+      {:tesla, github: "elixir-tesla/tesla", branch: "openapi"},
       {:finch, "~> 0.14.0"},
       {:jason, "~> 1.2"},
 

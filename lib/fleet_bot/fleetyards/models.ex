@@ -29,7 +29,7 @@ defmodule FleetBot.Fleetyards.Models do
               opts: [ttl: @ttl]
             )
   def slugs() do
-    {:ok, %Tesla.Env{status: 200, body: body}} = Client.get("/v1/models/slugs")
+    {:ok, %Tesla.Env{status: 200, body: body}} = Client.get("/models/slugs")
     body
   end
 
@@ -44,7 +44,7 @@ defmodule FleetBot.Fleetyards.Models do
               opts: [ttl: @ttl]
             )
   def model(slug, query \\ %{}) when is_binary(slug) do
-    Client.get("/v1/models/#{slug}", query: query)
+    Client.get("/models/#{slug}", query: query)
     |> match_error
     |> case do
       {:ok, %Tesla.Env{body: body}} -> {:ok, body}

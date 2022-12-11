@@ -12,7 +12,7 @@ config :fleet_bot, FleetBot.Discord,
   discord_allowed_langs:
     ~w(ar da vi hu uk lt ja hi tr cs th zh-TW el pl zh-CN ko de en-GB fi id ru sv-SE bg es-ES it pt-BR nl ro fr no hr he en-US)
 
-config :fleet_bot, FleetBot.Fleetyards, api_url: "https://api.fleetyards.net"
+config :fleet_bot, FleetBot.Fleetyards, api_url: "https://api.fleetyards.net/v1"
 
 config :fleet_bot, FleetBot.Fleetyards.Cache,
   # When using :shards as backend

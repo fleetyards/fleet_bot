@@ -1,5 +1,6 @@
 defmodule FleetBot.Fleetyards do
   alias FleetBot.Fleetyards.Client
+  use Tesla.OpenApi, spec: "priv/fleetyards.json", dump: "dump/fleetyards.ex"
 
   @typedoc """
   Fleetyards model slug.
@@ -27,6 +28,8 @@ defmodule FleetBot.Fleetyards do
         v
     end
   end
+
+  def new(), do: Client.new()
 
   @doc false
   def match_error({:ok, %Tesla.Env{status: 404, body: %{"code" => "not_found"}}}),

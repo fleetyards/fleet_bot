@@ -15,6 +15,10 @@ defmodule FleetBot.Fleetyards.Client do
     %Tesla.Client{pre: middleware, post: []}
   end
 
+  def new() do
+    %Tesla.Client{pre: __middleware__(), post: []}
+  end
+
   def middlewares do
     @__middleware__
   end

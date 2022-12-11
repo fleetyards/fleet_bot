@@ -8,7 +8,7 @@ defmodule FleetBot.Fleetyards.Vehicles do
   Get all public vehicles by username
   """
   def vehicles_one(username, query \\ []) when is_binary(username) do
-    Client.get("/v1/vehicles/#{username}", query: query)
+    Client.get("/vehicles/#{username}", query: query)
     |> match_error
     |> case do
       {:ok, %Tesla.Env{body: body, opts: opts}} ->

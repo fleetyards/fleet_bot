@@ -1,0 +1,50 @@
+{
+  "openapi" : "3.0.2",
+  "info" : {
+    "title" : "Fleetyards API",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.fleetyards.net/v1"
+  } ],
+  "paths" : {
+    "/version" : {
+      "get" : {
+        "operationId" : "get_version",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ServerVersion"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Get server verions",
+        "tags" : [ "version" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ServerVersion" : {
+        "properties" : {
+          "codename" : {
+            "example" : "Odyssey",
+            "type" : "string"
+          },
+          "version" : {
+            "example" : "v5.13.2",
+            "format" : "version",
+            "type" : "string"
+          }
+        },
+        "required" : [ "codename", "version" ],
+        "type" : "object"
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+openapi: '3.0.2'
+info:
+  title: Fleetyards API
+  version: '1.0'
+servers:
+  - url: https://api.fleetyards.net/v1
+paths:
+  /version:
+    get:
+      summary: "Get server verions"
+      operationId: "get_version"
+      tags:
+        - "version"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerVersion'
+  /vehicles/{username}:
+    get:
+      summary: "Get all public vehicles by username"
+      operationId: "public_vehicles"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicVehicle'
+                
+components:
+  schemas:
+    ServerVersion:
+      type: object
+      required:
+        - "codename"
+        - "version"
+      properties:
+        "codename":
+          type: string
+          example: "Odyssey"
+        "version":
+          type: string
+          format: version
+          example: "v5.13.2"
+    PublicVehicle:
+      type: object
+      required:
+        - "id"
+        - "loaner"
+        - 
