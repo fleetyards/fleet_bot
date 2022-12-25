@@ -36,7 +36,7 @@
             mixDeps = packages.fetchMixDeps {
               pname = "mix-deps-${pname}";
               inherit src mixEnv version;
-              sha256 = "sha256-G+QZOTiu9Dq/MOJnFYGzi9zOaZZqxaCvqqZc4xZwJ2M=";
+              sha256 = "sha256-IeXEu9n6pCkczLc0COyxr/iPGtUrT4Mij7sl4236OHg=";
             };
           in packages.mixRelease {
             inherit pname version src mixEnv;

@@ -202,6 +202,21 @@ in {
                   for options.
                 '';
               };
+              "FleetBot.Telemetry" = mkOption {
+                type = elixirValue;
+                default = {
+                  enabled = false;
+                  scheme = "https";
+                  port = 443;
+                };
+                defaultText = literalExpression ''
+                {
+                  enabled = false;
+                  scheme = "https";
+                  port = 443;
+                }
+                '';
+              };
             };
             ":appsignal" = {
               ":config" = mkOption {
