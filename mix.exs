@@ -21,7 +21,7 @@ defmodule FleetBot.MixProject do
   def application do
     [
       mod: {FleetBot.Application, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -48,8 +48,12 @@ defmodule FleetBot.MixProject do
       {:telemetry, "~> 1.0"},
 
       # Status
-      {:appsignal, "~> 2.0"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
+      {:telemetry_metrics_telegraf, "~> 0.3.0"},
       {:telemetry_metrics_appsignal, "~> 1.0"},
+      {:appsignal, "~> 2.0"},
+      {:instream, "~> 2.0"},
 
       # Gettext
       {:gettext, "~> 0.20"},

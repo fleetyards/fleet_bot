@@ -35,6 +35,15 @@ config :appsignal, :config,
   otp_app: :fleet_bot,
   name: "fleet_bot"
 
+# Influx
+config :fleet_bot, FleetBot.Telemetry,
+  enabled: false,
+  version: :v2,
+  auth: [method: :token],
+  log: false
+
+config :telemetry_metrics_telegraf, log_telegraf_config_on_start: false
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 if Kernel.macro_exported?(Config, :config_env, 0) do
