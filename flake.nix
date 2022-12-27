@@ -46,11 +46,8 @@
               };
 
               appsignal = super.appsignal.override {
-                prePatch = let
-                  privDir = "lib/erlang/lib/appsignal-${version}/priv/";
-                in ''
-                  mkdir -p ${privDir}
-                  cp ${appsignal_nif}/* ${privDir}
+                prePatch = ''
+                  cp ${appsignal_nif}/* c_src
                 '';
               };
 
