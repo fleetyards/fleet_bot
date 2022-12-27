@@ -27,21 +27,36 @@
     in {
 
       overlays.fleet = final: prev: {
-        fleet_bot = final.callPackage ({ beam, rebar3 }:
+        appsignal_nif = final.callPackage ./nix/appsignal-nif.nix { };
+        fleet_bot = final.callPackage ({ lib, beam, rebar3, beamPackages, appsignal_nif }:
           let
             packages = beam.packagesWith beam.interpreters.erlang;
             pname = "fleet_bot";
             src = self;
             mixEnv = "prod";
-            mixDeps = packages.fetchMixDeps {
-              pname = "mix-deps-${pname}";
-              inherit src mixEnv version;
-              sha256 = "sha256-nVl/2+tFXsfQ3vYkctpMhTzf0OiX9JgTCLLmCA+SRys=";
-            };
+
+            mixDeps = import ./nix/mix.nix { inherit lib beamPackages; overrides = overrideDeps; };
+
+            overrideDeps = (self: super: {
+              gun = super.remedy_gun.override {
+                name = "gun";
+              };
+              cowlib = super.remedy_cowlib.override {
+                name = "cowlib";
+              };
+
+              appsignal = super.appsignal.override {
+                prePatch = ''
+                  cp ${appsignal_nif}/* c_src
+                '';
+              };
+
+              credo = null;
+            });
           in packages.mixRelease {
             inherit pname version src mixEnv;
 
-            mixFodDeps = mixDeps;
+            mixNixDeps = mixDeps;
 
             nativeBuildInputs = [ rebar3 ];
           }) { };
@@ -49,7 +64,7 @@
       overlays.default = self.overlays.fleet;
 
       packages = forAllSystems (system: {
-        inherit (nixpkgsFor.${system}) fleet_bot;
+        inherit (nixpkgsFor.${system}) fleet_bot appsignal_nif;
         default = self.packages.${system}.fleet_bot;
       });
 
