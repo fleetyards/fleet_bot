@@ -27,21 +27,28 @@
     in {
 
       overlays.fleet = final: prev: {
-        fleet_bot = final.callPackage ({ beam, rebar3 }:
+        fleet_bot = final.callPackage ({ lib, beam, rebar3, beamPackages }:
           let
             packages = beam.packagesWith beam.interpreters.erlang;
             pname = "fleet_bot";
             src = self;
             mixEnv = "prod";
-            mixDeps = packages.fetchMixDeps {
-              pname = "mix-deps-${pname}";
-              inherit src mixEnv version;
-              sha256 = "sha256-nVl/2+tFXsfQ3vYkctpMhTzf0OiX9JgTCLLmCA+SRys=";
-            };
+
+            mixDeps = import ./nix/mix.nix { inherit lib beamPackages; overrides = overrideDeps; };
+
+            overrideDeps = (self: super: {
+              gun = self.remedy_gun.override {
+                name = "gun";
+              };
+              cowlib = self.remedy_cowlib.override {
+                name = "cowlib";
+              };
+              credo = null;
+            });
           in packages.mixRelease {
             inherit pname version src mixEnv;
 
-            mixFodDeps = mixDeps;
+            mixNixDeps = mixDeps;
 
             nativeBuildInputs = [ rebar3 ];
           }) { };

@@ -71,7 +71,8 @@ defmodule FleetBot.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.rollback --all", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test --no-start"],
-      fmt: ["format"]
+      fmt: ["format"],
+      nix: ["cmd mix2nix mix.lock > nix/mix.nix"]
     ]
   end
 end
