@@ -28,7 +28,7 @@
 
       overlays.fleet = final: prev: {
         appsignal_nif = final.callPackage ./nix/appsignal-nif.nix { };
-        fleet_bot = final.callPackage ({ lib, beam, rebar3, beamPackages }:
+        fleet_bot = final.callPackage ({ lib, beam, rebar3, beamPackages, appsignal_nif }:
           let
             packages = beam.packagesWith beam.interpreters.erlang;
             pname = "fleet_bot";
@@ -38,12 +38,22 @@
             mixDeps = import ./nix/mix.nix { inherit lib beamPackages; overrides = overrideDeps; };
 
             overrideDeps = (self: super: {
-              gun = self.remedy_gun.override {
+              gun = super.remedy_gun.override {
                 name = "gun";
               };
-              cowlib = self.remedy_cowlib.override {
+              cowlib = super.remedy_cowlib.override {
                 name = "cowlib";
               };
+
+              appsignal = super.appsignal.override {
+                prePatch = let
+                  privDir = "lib/erlang/lib/appsignal-${version}/priv/";
+                in ''
+                  mkdir -p ${privDir}
+                  cp ${appsignal_nif}/* ${privDir}
+                '';
+              };
+
               credo = null;
             });
           in packages.mixRelease {

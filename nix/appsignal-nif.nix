@@ -13,7 +13,7 @@ in stdenv.mkDerivation {
     sha256 = triple.checksum;
   };
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [] ++ lib.optional stdenv.isLinux autoPatchelfHook;
 
   # Work around the "unpacker appears to have produced no directories"
   # case that happens when the archive doesn't have a subdirectory.
