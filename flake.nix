@@ -27,6 +27,7 @@
     in {
 
       overlays.fleet = final: prev: {
+        appsignal_nif = final.callPackage ./nix/appsignal-nif.nix { };
         fleet_bot = final.callPackage ({ lib, beam, rebar3, beamPackages }:
           let
             packages = beam.packagesWith beam.interpreters.erlang;
@@ -56,7 +57,7 @@
       overlays.default = self.overlays.fleet;
 
       packages = forAllSystems (system: {
-        inherit (nixpkgsFor.${system}) fleet_bot;
+        inherit (nixpkgsFor.${system}) fleet_bot appsignal_nif;
         default = self.packages.${system}.fleet_bot;
       });
 
