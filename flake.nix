@@ -56,6 +56,8 @@
           in packages.mixRelease {
             inherit pname version src mixEnv;
 
+            configurePhase = "";
+
             mixNixDeps = mixDeps;
 
             nativeBuildInputs = [ rebar3 ];
